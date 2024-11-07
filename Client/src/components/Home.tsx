@@ -1,10 +1,10 @@
 // src/components/Home.js
 import React, { useEffect, useState } from "react";
 import { auth } from "../firebaseConfig";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
 
-const Home = () => {
-  const [user, setUser] = useState(null);
+const Home: React.FC = () => {
+  const [user, setUser] = useState<User|null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -12,7 +12,7 @@ const Home = () => {
     });
     return () => unsubscribe();
   }, []);
-
+  
   const handleLogout = () => {
     signOut(auth);
   };
