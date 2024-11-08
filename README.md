@@ -5,7 +5,10 @@ UCSD students often have trouble maximizing the effectiveness of their study ses
 ![Project Screenshot](https://cdn.discordapp.com/attachments/1291885101835223088/1304241751552426067/image.png?ex=672ead49&is=672d5bc9&hm=93cd892e51a3c0941baaa70e02127a4f44d84c157feed1d77374a347e4d10fbb&)
 
 **CSE 110 Group Project Team 16 Fall 2024**
-(Add team member names here)
+Roles:
+* Frontend - Hou, Diego, Jiho
+* Full-stack - Jonathan
+* Backend - Jon, Jose
 
 ### Project Details
 * [Jira Board](https://jonatuanh.atlassian.net/jira/software/projects/TEAM16/boards/3/timeline?shared=&atlOrigin=eyJpIjoiMDE0NDlkOTdiOTEyNDlmYWEwNGQzZjlkZGJiNjUwY2YiLCJwIjoiaiJ9)
