@@ -19,6 +19,7 @@ jobs:
       # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
+        working-directory: ./client
         with:
           node-version: '18' # Use the Node.js version your project requires
           cache: 'npm'
