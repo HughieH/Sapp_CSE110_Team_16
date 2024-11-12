@@ -1,0 +1,34 @@
+name: Run Jest Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Use the Node.js version your project requires
+          cache: 'npm'
+
+      # Step 3: Navigate to client directory and install dependencies
+      - name: Install Dependencies
+        working-directory: ./client
+        run: npm install
+
+      # Step 4: Run Jest Tests
+      - name: Run Jest Tests
+        working-directory: ./client
+        run: npm test -- --watchAll=false

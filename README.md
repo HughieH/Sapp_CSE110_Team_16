@@ -14,8 +14,14 @@ Roles:
 * [Jira Board](https://jonatuanh.atlassian.net/jira/software/projects/TEAM16/boards/3/timeline?shared=&atlOrigin=eyJpIjoiMDE0NDlkOTdiOTEyNDlmYWEwNGQzZjlkZGJiNjUwY2YiLCJwIjoiaiJ9)
 * [Vision Document](https://docs.google.com/document/d/1riDNXX01jxAQ4H5liydB1oNyp8TTPLuVSikaDNFcDe0/edit?tab=t.0)
 
+### Setting Up
+Node Version 22.9.0 (highly recommend using nvm, allows us to switch between different versions of node)`
+Starting the frontend (cd into client -> npm install -> npm start), after these commands you should be able to see the frontend at localhost:3000
+
 ### Branching Strategy
 * main - This will be our production branch, do not commmit directly here!
-* (feature name) - Individual feature branches. These are branches we will be working of on sprints
+* (sprint number - feature name) - Individual feature branches. These are branches we will be working of on sprints
+
+
 
 
