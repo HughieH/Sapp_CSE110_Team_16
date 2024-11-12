@@ -95,5 +95,9 @@ body {
 .create-account-link:hover {
     text-decoration: none;
 }
-
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    color: #98C98E;
+    opacity: 1;
+}
 
