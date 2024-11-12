@@ -26,10 +26,10 @@ jobs:
 
       # Step 3: Navigate to client directory and install dependencies
       - name: Install Dependencies
-        working-directory: ./client
+        working-directory: ./Client
         run: npm install
 
       # Step 4: Run Jest Tests
       - name: Run Jest Tests
-        working-directory: ./client
+        working-directory: ./Client
         run: npm test -- --watchAll=false
