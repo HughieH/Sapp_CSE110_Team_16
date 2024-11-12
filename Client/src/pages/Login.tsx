@@ -1,6 +1,7 @@
 import React from 'react';
-import logo from '../images/logo.png';
-import image from '../images/image.png';
+import logo from '../assets/logo.png';
+import image from '../assets/image.png';
+import { Link } from 'react-router-dom';
 import './login.css';
 
 const Login: React.FC = () => {
@@ -23,6 +24,15 @@ const Login: React.FC = () => {
                             </div>
                             <button type="submit">Log In</button>
                         </form>
+                        
+                        {/* Create Account link */}
+                        <Link to="/create-account" className="create-account-link">
+                            Create Account
+                        </Link>
+                        {/* fogot password?*/}
+                        <Link to="/create-account" className="create-account-link">
+                            Forgot Passward?
+                        </Link>
                     </div>
                     <img src={image} alt="Additional" className="additional-image" />
                 </div>
