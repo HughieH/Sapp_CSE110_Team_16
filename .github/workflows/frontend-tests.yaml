@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm' # Caches node_modules for faster runs
-          cache-dependency-path: client/package-lock.json # Correct path to the lock file
+          cache-dependency-path: Client/package-lock.json # Correct path to the lock file
 
       # Step 3: Navigate to client directory and install dependencies
       - name: Install Dependencies
