@@ -19,10 +19,10 @@ jobs:
       # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
-        working-directory: ./client
         with:
-          node-version: '18' # Use the Node.js version your project requires
-          cache: 'npm'
+          node-version: '18'
+          cache: 'npm' # Caches node_modules for faster runs
+          cache-dependency-path: client/package-lock.json # Correct path to the lock file
 
       # Step 3: Navigate to client directory and install dependencies
       - name: Install Dependencies
