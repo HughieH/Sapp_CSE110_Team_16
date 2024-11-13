@@ -1,5 +1,6 @@
 // FlashcardDecks.tsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './FlashcardDecks.css';
 
 const FlashcardDecks: React.FC = () => {
@@ -27,12 +28,9 @@ const FlashcardDecks: React.FC = () => {
             </div>
             <div className="deck-name">{deck.name}</div>
             <div className="button-container">
-              <button
-                className="button edit-button"
-                onClick={() => alert(`Edit ${deck.name}`)}
-              >
+              <Link to={`/edit/${deck.id}`} className="button edit-button">
                 Edit
-              </button>
+              </Link>
               <button
                 className="button study-button"
                 onClick={() => alert(`Study ${deck.name}`)}
@@ -42,7 +40,7 @@ const FlashcardDecks: React.FC = () => {
             </div>
           </div>
         ))}
-        
+
         {/* Create New Deck Placeholder */}
         <div className="create-new-placeholder">
           <button

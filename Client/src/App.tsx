@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Timer from './pages/Timer';
 import FlashcardDecks from './pages/FlashcardDecks';
+import EditDeck from './pages/EditDeck';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/timers" element={<Timer />} />
         <Route path="/decks" element={<FlashcardDecks />} />
+        <Route path="/edit/:deckId" element={<EditDeck />} />
       </Routes>
   );
 }
