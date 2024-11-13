@@ -1,41 +1,59 @@
-// src/components/FlashcardDecks.tsx
-
+// FlashcardDecks.tsx
 import React from 'react';
-import { FaEdit, FaBook } from 'react-icons/fa'; // Import icons
-import './FlashcardDecks.css'; // Import global CSS file
-
+import './FlashcardDecks.css';
 
 const FlashcardDecks: React.FC = () => {
   const decks = [
-    { id: 1, name: 'Deck 1' },
-    { id: 2, name: 'Deck 2' },
-    { id: 3, name: 'Deck 3' },
+    { id: 1, name: 'Deck 1', cards: ['Card 1', 'Card 2', 'Card 3'] },
+    { id: 2, name: 'Deck 2', cards: ['Card 1', 'Card 2', 'Card 3'] },
+    { id: 3, name: 'Deck 3', cards: ['Card 1', 'Card 2', 'Card 3'] },
   ];
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>Flashcard Decks</h1>
-      <ul>
+      <h1 className="your-decks-title">Your Decks</h1>
+
+      <div className="deck-container">
         {decks.map((deck) => (
-          <li key={deck.id} style={{ marginBottom: '20px' }}>
-            <span>{deck.name}</span>
-            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginTop: '10px' }}>
+          <div key={deck.id} className="deck-card">
+            <div className="deck-preview">
+              <div className="card-stack">
+                {deck.cards.map((card, index) => (
+                  <div key={index} className={`card ${index === 2 ? 'front-card' : ''}`}>
+                    {card}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="deck-name">{deck.name}</div>
+            <div className="button-container">
               <button
-                className="edit-button"
+                className="button edit-button"
                 onClick={() => alert(`Edit ${deck.name}`)}
               >
-                <FaEdit size={24} />
+                Edit
               </button>
               <button
-                className="study-button"
+                className="button study-button"
                 onClick={() => alert(`Study ${deck.name}`)}
               >
-                <FaBook size={24} />
+                Study
               </button>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+        
+        {/* Create New Deck Placeholder */}
+        <div className="create-new-placeholder">
+          <button
+            className="create-new-button"
+            onClick={() => alert('Create a new deck')}
+          >
+            +
+          </button>
+          <div className="create-new-text">Create New</div>
+        </div>
+      </div>
     </div>
   );
 };
