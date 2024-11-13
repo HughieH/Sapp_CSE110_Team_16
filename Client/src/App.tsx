@@ -4,11 +4,12 @@ import HomePage from './pages/HomePage';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Timer from './pages/Timer';
+import FlashcardDecks from './pages/FlashcardDecks';
 
 function App() {
   return (
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<FlashcardDecks />} />  
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/timers" element={<Timer />} />

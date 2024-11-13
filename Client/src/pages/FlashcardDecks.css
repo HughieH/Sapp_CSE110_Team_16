@@ -1,0 +1,47 @@
+/* src/components/FlashcardDecks.css */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.edit-button {
+  background-color: #4CAF50; /* Green for Edit */
+}
+
+.study-button {
+  background-color: #FF5733; /* Red-Orange for Study */
+}
+
+button:hover .edit-button {
+  background-color: #45a049;
+}
+
+button:hover .study-button {
+  background-color: #e74c3c;
+}
+
+button .edit-button,
+button .study-button {
+  color: white;
+}
+
+button .edit-button {
+  padding: 10px;
+  background-color: #4CAF50;
+}
+
+button .study-button {
+  padding: 10px;
+  background-color: #FF5733;
+}
