@@ -9,10 +9,11 @@ import FlashcardDecks from './pages/FlashcardDecks';
 function App() {
   return (
       <Routes>
-        <Route path="/" element={<FlashcardDecks />} />  
+        <Route path="/" element={<HomePage />} />  
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/timers" element={<Timer />} />
+        <Route path="/decks" element={<FlashcardDecks />} />
       </Routes>
   );
 }
