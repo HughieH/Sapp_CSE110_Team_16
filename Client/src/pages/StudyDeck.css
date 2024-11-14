@@ -1,23 +1,22 @@
-/* StudyDeck.css */
-
 .study-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center vertically */
-    height: 100vh; /* Full viewport height */
+    justify-content: center;
+    height: 100vh;
     padding: 20px;
-    text-align: center; /* Ensure all text is centered */
-}
-
-.deck-title {
+    text-align: center;
+    background-color: #F9FBE7; /* Soft background color for the container */
+  }
+  
+  .deck-title {
     font-size: 1.5rem;
     color: #2E7D32;
     font-weight: bold;
     margin-bottom: 20px;
-}
-
-.flashcard {
+  }
+  
+  .flashcard {
     width: 200px;
     height: 150px;
     border-radius: 12px;
@@ -27,25 +26,26 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    perspective: 1000px; /* Adds depth for flip effect */
-    margin-bottom: 20px; /* Space below the flashcard */
-}
-
-.flashcard-inner {
+    perspective: 1000px; /* Enables 3D effect for flip */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  }
+  
+  .flashcard-inner {
     position: relative;
     width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.6s;
-    transform-style: preserve-3d;
-}
-
-.flashcard.flipped .flashcard-inner {
-    transform: rotateY(180deg); /* Flip effect */
-}
-
-.flashcard-front,
-.flashcard-back {
+    transform-style: preserve-3d; /* Ensures the child elements can rotate */
+  }
+  
+  .flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg); /* Rotate the card 180 degrees when flipped */
+  }
+  
+  .flashcard-front,
+  .flashcard-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -54,47 +54,105 @@
     justify-content: center;
     font-weight: bold;
     color: #2E7D32;
-    backface-visibility: hidden; /* Hide the back side when flipped */
-}
-
-.flashcard-back {
-    transform: rotateY(180deg); /* Back side rotated */
-}
-
-.button-group {
+    backface-visibility: hidden; /* Hides the back side when flipped */
+  }
+  
+  .flashcard-back {
+    transform: rotateY(180deg); /* Back side is rotated 180 degrees */
+  }
+  
+  /* Flip Card Button */
+  .flip-button {
+    background-color: #66BB6A;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .flip-button:hover {
+    background-color: #2E7D32;
+  }
+  
+  /* Stats & Message */
+  .stats {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    color: #388E3C;
+  }
+  
+  .deck-completed-message {
+    font-size: 1.2rem;
+    color: #D32F2F;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  /* Other Button Styles */
+  .button-group {
     display: flex;
     gap: 10px;
     margin-top: 20px;
-    justify-content: center; /* Center buttons horizontally */
-    width: 100%;
-    max-width: 400px; /* Limit button group width */
-}
-
-.study-button {
+    justify-content: center;
+  }
+  
+  .study-button {
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
     color: white;
     font-weight: bold;
     cursor: pointer;
-    flex: 1;
-}
-
-.wrong-button {
-    background-color: #FFCC80;
-}
-
-.correct-button {
-    background-color: #A5D6A7;
-}
-
-.ignore-button {
-    background-color: #EF9A9A;
-}
-
-.go-back-link {
+    transition: background-color 0.3s ease-in-out; /* Smooth transition */
+  }
+  
+  .wrong-button {
+    background-color: #FFB74D; /* Light Orange */
+  }
+  
+  .correct-button {
+    background-color: #66BB6A; /* Green */
+  }
+  
+  .ignore-button {
+    background-color: #EF5350; /* Red */
+  }
+  
+  .study-button:hover {
+    background-color: #4CAF50; /* Change on hover for all buttons */
+  }
+  
+  .wrong-button:hover {
+    background-color: #FF9800; /* Darker orange */
+  }
+  
+  .correct-button:hover {
+    background-color: #43A047; /* Darker green */
+  }
+  
+  .ignore-button:hover {
+    background-color: #D32F2F; /* Darker red */
+  }
+  
+  .navigation-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .go-back-link {
     margin-top: 20px;
     color: #2E7D32;
     font-weight: bold;
     text-decoration: none;
-}
+  }
+  
+  .go-back-link:hover {
+    text-decoration: underline;
+  }
+  
