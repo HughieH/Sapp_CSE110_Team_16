@@ -10,12 +10,12 @@ jobs:
     steps:
       # Step 1: Checkout the code
       
-name: Checkout Repository
+      name: Checkout Repository
       uses: actions/checkout@v3
 
       # Step 2: Set up Node.js
       
-name: Set up Node.js
+      name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
@@ -24,12 +24,12 @@ name: Set up Node.js
 
       # Step 3: Navigate to client directory and install dependencies
       
-name: Install Dependencies
+      name: Install Dependencies
       working-directory: ./Client
       run: npm install
 
       # Step 4: Run Jest Tests
       
-name: Run Jest Tests
+      name: Run Jest Tests
       working-directory: ./Client
       run: npm test -- --watchAll=false
