@@ -1,10 +1,10 @@
 import React from 'react';
 import logo from '../assets/logo.png';
-import Register from '../assets/register.png';
+import register from '../assets/register.png';
 import { Link } from 'react-router-dom';
 import './login.css';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     return (
         <div className="container">
             <div className="left-panel">
@@ -35,11 +35,11 @@ const Login: React.FC = () => {
                           </Link>
                       </div>
                     </div>
-                    <img src={Register} alt="Additional" className="additional-image" />
+                    <img src={register} alt="Additional" className="additional-image" />
                 </div>
             </div>
         </div>
     );
 };
 
-export default Login;
+export default Register;
