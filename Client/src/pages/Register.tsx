@@ -75,7 +75,6 @@ const Register = () => {
       <div className="left-panel">
         <img src={logo} alt="Logo" className="logo" />
       </div>
-
       <div className="right-panel">
         <div className="login-content">
           <div className="login-container">
