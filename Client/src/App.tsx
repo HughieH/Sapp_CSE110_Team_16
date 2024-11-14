@@ -4,6 +4,8 @@ import HomePage from './pages/HomePage';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Timer from './pages/Timer';
+import Profile from './pages/Profile';
+import Decks from './pages/Decks';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/timers" element={<Timer />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/decks" element={<Decks/>} />
       </Routes>
   );
 }
