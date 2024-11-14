@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import HomePage from './HomePage';
 
-jest.mock('../assets/SappLogo.png', () => 'SappLogo.png');
-jest.mock('../assets/book-icon-homepage.png', () => 'book-icon-homepage.png');
+jest.mock('../assets/icons/SappLogo.png', () => 'SappLogo.png');
+jest.mock('../assets/icons/book-icon-homepage.png', () => 'book-icon-homepage.png');
 
 describe('HomePage Component', () => {
   test('renders the SAPP title and book icon', () => {
