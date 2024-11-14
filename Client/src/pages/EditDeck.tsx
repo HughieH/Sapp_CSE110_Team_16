@@ -78,15 +78,15 @@ const EditDeck: React.FC = () => {
     <div style={{ padding: '20px' }}>
       <div className="header">
         <h1 className="deck-title">{deckName}</h1>
-        <button className="edit-icon-button" onClick={handleEditDeckName}>
+        <button className="edit-icon-button" onClick={handleEditDeckName} data-testid="rename deck">
           ✏️
         </button>
-        <button className="delete-icon-button" onClick={handleDeleteDeck}>
+        <button className="delete-icon-button" onClick={handleDeleteDeck} data-testid="delete deck">
           🗑️
         </button>
       </div>
 
-      <Link to="/decks" style={{ color: '#2E7D32', fontWeight: 'bold' }}>
+      <Link to="/decks" style={{ color: '#2E7D32', fontWeight: 'bold' }} data-testid="back button">
         Go Back
       </Link>
 
@@ -100,6 +100,7 @@ const EditDeck: React.FC = () => {
                   type="text"
                   value={card.frontContent}
                   onChange={(e) => handleEditCard(card.id, 'front', e.target.value)}
+                  data-testid="front-text"
                   placeholder="Enter front content"
                 />
               </div>
@@ -109,6 +110,7 @@ const EditDeck: React.FC = () => {
                   type="text"
                   value={card.backContent}
                   onChange={(e) => handleEditCard(card.id, 'back', e.target.value)}
+                  data-testid="back-text"
                   placeholder="Enter back content"
                 />
               </div>

@@ -69,32 +69,32 @@ const StudyDeck: React.FC = () => {
       </div>
 
       {/* Flip Card Button */}
-      <button className="flip-button" onClick={toggleFlip}>
+      <button className="flip-button" onClick={toggleFlip} data-testid="flip button">
         Flip Card
       </button>
 
       <div className="button-group">
-        <button className="study-button wrong-button" onClick={nextCard}>
+        <button className="study-button wrong-button" onClick={nextCard} data-testid="wrong button">
           Wrong
         </button>
-        <button className="study-button correct-button" onClick={nextCard}>
+        <button className="study-button correct-button" onClick={nextCard} data-testid="correct button">
           Correct
         </button>
-        <button className="study-button ignore-button" onClick={nextCard}>
+        <button className="study-button ignore-button" onClick={nextCard} data-testid="ignore button">
           Ignore
         </button>
       </div>
 
       <div className="navigation-buttons">
-        <button className="study-button" onClick={previousCard} disabled={currentCardIndex === 0}>
+        <button className="study-button" onClick={previousCard} disabled={currentCardIndex === 0} data-testid="prev button">
           Previous
         </button>
-        <button className="study-button" onClick={nextCard} disabled={currentCardIndex === deck.cards.length - 1}>
+        <button className="study-button" onClick={nextCard} disabled={currentCardIndex === deck.cards.length - 1} data-testid="next button">
           Next
         </button>
       </div>
 
-      <Link to="/decks" className="go-back-link">
+      <Link to="/decks" className="go-back-link" data-testid="back button">
         Go Back
       </Link>
     </div>
