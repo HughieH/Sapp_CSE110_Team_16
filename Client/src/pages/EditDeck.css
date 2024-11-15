@@ -1,0 +1,98 @@
+/*EditDeck.css*/
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.deck-title {
+    font-size: 2.5rem;
+    color: #2E7D32;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.flashcard-edit-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* More balanced column width */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.flashcard, .create-new-card {
+    background-color: #E0F2E9; /* Lighter green background */
+    width: 100%; /* Use full width of grid cell */
+    height: 150px; /* Set fixed height to make them rectangular */
+    border: 3px solid #2E7D32; /* Bolder green border */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-top: 10px; /* Adjust spacing for icons */
+}
+
+.flashcard-content {
+    font-size: 1rem;
+    color: #4D4D4D;
+    text-align: center;
+}
+
+.flashcard-actions {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.edit-icon, .delete-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #2E7D32;
+}
+
+.edit-icon:hover, .delete-icon:hover {
+    color: #1A5E20; /* Darker green on hover */
+}
+
+.edit-icon-button, .delete-icon-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #2E7D32;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+/* Create New Card Button Styling */
+.create-new-card {
+    cursor: pointer;
+}
+
+.create-icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #2E7D32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #2E7D32;
+    background-color: transparent; /* Clear background */
+}
+
+.create-new-text {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #4D4D4D;
+}

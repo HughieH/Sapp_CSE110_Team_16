@@ -1,0 +1,141 @@
+/* FlashcardDecks.css */
+
+.your-decks-title {
+    font-size: 2rem;
+    color: #2E7D32; /* Green color */
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  
+  .deck-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 80px auto 0; /* Extra space at the top to make room for the title */
+    max-width: 800px;
+  }
+  
+  .deck-card {
+    background-color: #A8DAB5;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .deck-preview {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card-stack {
+    display: flex;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .card {
+    background-color: #CCE8D2;
+    width: 50px;
+    height: 70px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4D4D4D;
+    font-size: 0.75rem;
+    transition: transform 0.3s;
+  }
+  
+  .card:not(:first-child) {
+    margin-left: -30px; /* Creates overlapping effect */
+  }
+  
+  .front-card {
+    z-index: 2; /* Brings the third card to the front */
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+  }
+
+  
+  
+  .deck-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .edit-button {
+    background-color: #FFB266; /* Orange for Edit */
+  }
+  
+  .study-button {
+    background-color: #FF6666; /* Red for Study */
+  }
+  
+  .button:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Create New Deck Placeholder */
+  .create-new-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .create-new-button {
+    background-color: transparent;
+    color: #4D4D4D;
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid #4D4D4D;
+    transition: transform 0.3s;
+  }
+  
+  .create-new-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .create-new-text {
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #4D4D4D;
+  }
+  
