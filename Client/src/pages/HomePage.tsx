@@ -2,7 +2,6 @@ import React from 'react';
 import SappLogo from '../assets/SappLogo.png'
 import BookIcon from '../assets/book-icon-homepage.png'
 import { useNavigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
   const navigate = useNavigate();
