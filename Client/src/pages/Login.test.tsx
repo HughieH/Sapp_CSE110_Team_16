@@ -28,6 +28,6 @@ describe('Login Component', () => {
         expect(screen.getByText(/Create Account/i)).toBeInTheDocument();
 
         // Check for "Forgot Password?" link
-        expect(screen.getByText(/Forgot Passward/i)).toBeInTheDocument();
+        expect(screen.getByText(/Forgot Password/i)).toBeInTheDocument();
     });
 });
