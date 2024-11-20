@@ -20,9 +20,7 @@ describe('HomePage Component', () => {
   });
 
   test('renders the Log In and Create Account buttons', () => {
-    render(<BrowserRouter>
-            <HomePage />
-          </BrowserRouter>);    
+    render(<HomePage />);
     
     // Check if "Log In" button is present
     const loginButton = screen.getByText(/Log In/i);
