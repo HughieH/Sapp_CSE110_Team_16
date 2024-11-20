@@ -2,9 +2,9 @@ import React from 'react';
 import SappLogo from '../assets/SappLogo.png'
 import BookIcon from '../assets/book-icon-homepage.png'
 import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -35,10 +35,10 @@ const HomePage = () => {
       
       {/* Our Login & Register Button */}
       <div className="flex flex-col gap-4">
-        <button onClick={handleLoginClick} className="w-72 py-2 text-white font-bold bg-green-600 rounded hover:bg-green-700 transition hover:scale-110 duration-300">
+        <button onClick={handleLoginClick} className="w-48 py-2 text-white font-bold bg-green-600 rounded hover:bg-green-700 transition duration-300">
           Log In
         </button>
-        <button onClick={handleRegisterClick} className="w-72 py-2 text-white font-bold bg-green-600 rounded hover:bg-green-700 hover:scale-110 transition duration-300">
+        <button onClick={handleRegisterClick} className="w-48 py-2 text-white font-bold bg-green-600 rounded hover:bg-green-700 transition duration-300">
           Create Account
         </button>
       </div>

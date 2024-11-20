@@ -1,12 +1,50 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {auth} from '../firebaseConfig'
 import logo from '../assets/logo.png';
 import image from '../assets/image.png';
 import { Link } from 'react-router-dom';
-import './login.css';
+import './Login.css';
 
-const Login: React.FC = () => {
-    return (
-        <div className="container">
+const Login = () => {
+ const [email, setEmail] = useState<string>('');
+ const [password, setPassword] = useState<string>('');
+ const [error, setError] = useState<string|null>('');
+ const provider = new GoogleAuthProvider();
+
+
+ const handleEmailSignIn = async (e: React.FormEvent) => {
+   e.preventDefault();
+   try {
+     await signInWithEmailAndPassword(auth, email, password);
+     console.log("User signed in successfully with email and password");
+   } catch (err) {
+     if (err instanceof Error) {
+       console.error("Error during email sign-in:", err.message);
+       setError(err.message);
+     } else {
+       setError("An unexpected error occurred.");
+     }
+   }
+ };
+
+ const handleGoogleSignIn = async () => {
+   const provider = new GoogleAuthProvider();
+   try {
+     await signInWithPopup(auth, provider);
+     console.log("User signed in successfully with Google");
+   } catch (err) {
+     if (err instanceof Error) {
+       console.error("Error during Google sign-in:", err.message);
+       setError(err.message);
+     } else {
+       setError("An unexpected error occurred.");
+     }
+   }
+ };
+
+ return (
+   <div className="container">
             <div className="left-panel">
                 <img src={logo} alt="Logo" className="logo" />
             </div>
@@ -25,20 +63,19 @@ const Login: React.FC = () => {
                             <button type="submit">Log In</button>
                         </form>
                         
-                        {/* Create Account link */}
                         <Link to="/Register" className="create-account-link">
                             Create Account
                         </Link>
-                        {/* fogot password?*/}
                         <Link to="/Register" className="create-account-link">
-                            Forgot Passward?
+                            Forgot Password?
                         </Link>
                     </div>
                     <img src={image} alt="Additional" className="additional-image" />
                 </div>
             </div>
         </div>
-    );
+ );
 };
+
 
 export default Login;
