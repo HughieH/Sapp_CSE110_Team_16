@@ -125,6 +125,7 @@ const EditDeck: React.FC = () => {
               <button
                 className="delete-icon"
                 onClick={() => handleDeleteCard(card.id)}
+                data-testid="delete-button"
               >
                 🗑️
               </button>
