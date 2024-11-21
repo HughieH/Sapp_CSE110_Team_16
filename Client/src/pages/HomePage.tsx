@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const HomePage = () => {
   return (
     <>
-    <div className="grow flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center">
+    <div data-testid="Home" className="grow flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center">
       <div className="flex items-center mb-2">
         <h1 className="text-4xl font-bold text-green-600 mr-2">SAPP</h1>
         <img src={BookIcon} alt="Book Icon" className="w-8 h-8" />
@@ -26,12 +26,12 @@ const HomePage = () => {
       
       {/* Our Login & Register Button */}
       <div className="flex flex-col gap-4">
-        <Link to='/login'>
+        <Link data-testid="LoginButton" to='/login'>
           <button className="w-48 py-2 text-white font-bold bg-green-600 rounded hover:bg-green-700 transition duration-300">
             Log In
           </button>
         </Link>
-        <Link to='/register'>
+        <Link data-testid="RegisterButton" to='/register'>
           <button className="w-48 py-2 text-white font-bold bg-green-600 rounded hover:bg-green-700 transition duration-300">
             Create Account
           </button>

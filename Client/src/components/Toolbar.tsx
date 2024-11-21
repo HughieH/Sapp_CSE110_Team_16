@@ -8,8 +8,8 @@ interface toolbarProps {
 const Toolbar: React.FC<toolbarProps> = ({ onButtonClick }) => {
   return (
     <>
-        <div className="absolute bg-sapp-green rounded-xl inline-block overflow-auto float-left">
-            <img className="w-1/12" src={CollapseIcon} onClick={onButtonClick}/>
+        <div data-testid="Toolbar" className="absolute bg-sapp-green rounded-xl inline-block overflow-auto float-left">
+            <img data-testid="Collapser" className="w-1/12" src={CollapseIcon} onClick={onButtonClick}/>
         </div>
     </>
   );

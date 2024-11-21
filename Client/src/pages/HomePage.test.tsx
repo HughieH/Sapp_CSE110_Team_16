@@ -33,3 +33,9 @@ describe('HomePage Component', () => {
     expect(createAccountButton).toBeInTheDocument();
   });
 });
+
+describe('NavBar Component', () => {
+  test('', () => {
+
+  });
+});
