@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth, db } from '../firebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
@@ -6,72 +6,90 @@ import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import register from '../assets/register.png';
 import { useNavigate } from 'react-router-dom';
-
+import { UserContext } from '../context/AppContext';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
-  const [, setError] = useState<string | null>(null)
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [successMessage, setSuccessMessage] = useState<string | null>(null); 
+  const [error, setError] = useState<string | null>(null);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/timer')
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      await setDoc(doc(db, "users", user.uid), {
+      await setDoc(doc(db, 'users', user.uid), {
         name: name,
         email: user.email,
         createdAt: new Date(),
-        uid: user.uid
+        uid: user.uid,
+        decks: [],
       });
-      console.log("User registered and data saved to Firestore");
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: name,
+      });
+      setSuccessMessage('Successfully registered! Redirecting to Login...'); 
+      setTimeout(() => {
+        navigate('/login'); 
+      }, 2000);
     } catch (err) {
       if (err instanceof Error) {
-        console.error("Error registering user: ", err.message);
+        console.error('Error registering user: ', err.message);
         setError(err.message);
       } else {
-        console.error("Unexpected Error, ", err);
-        setError("Unexpected Error")
+        console.error('Unexpected Error, ', err);
+        setError('Unexpected Error');
       }
     }
   };
-
 
   const handleRegisterWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      const userDocRef = doc(db, "users", user.uid);
+      const userDocRef = doc(db, 'users', user.uid);
       const userSnapshot = await getDoc(userDocRef);
       if (!userSnapshot.exists()) {
         await setDoc(userDocRef, {
-          name: user.displayName || "Unnamed",
+          name: user.displayName || 'Unnamed',
           email: user.email,
           createdAt: new Date(),
-          uid: user.uid
+          uid: user.uid,
         });
       }
-      navigate('/timer')
-      console.log("User registered with Google and data saved to Firestore");
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      });
+      setSuccessMessage('Successfully registered with Google! Redirecting to Login...'); // success message
+      setTimeout(() => {
+        navigate('/login'); // redirect to login page in 2 sec
+      }, 2000);
     } catch (err) {
       if (err instanceof Error) {
-        console.error("Error with Google sign-in: ", err.message);
+        console.error('Error with Google sign-in: ', err.message);
         setError(err.message);
       } else {
-        console.error("Unexpected error", err);
-        setError("An unexpected error occurred.");
+        console.error('Unexpected error', err);
+        setError('An unexpected error occurred.');
       }
     }
   };
 
   return (
-    <div data-testid="Register" className="grow flex flex-col items-center justify-center min-h-screen">
+    <div className="container">
+      <div className="left-panel">
+        <img src={logo} alt="Logo" className="logo" />
+      </div>
       <div className="right-panel">
         <div className="login-content">
           <div className="login-container">
@@ -107,13 +125,17 @@ const Register = () => {
               Sign up with Google
             </button>
 
+            {successMessage && ( // success message
+              <p style={{ color: 'green', marginTop: '10px' }}>{successMessage}</p>
+            )}
+            {error && ( // error message
+              <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>
+            )}
+
             {/* Going back to login page */}
             <div style={{ textAlign: 'center', fontSize: '22px', color: 'white' }}>
               Already signed up? Go to&nbsp;
-              <Link
-                to="/Login"
-                style={{ color: 'white', textDecoration: 'underline' }}
-              >
+              <Link to="/Login" style={{ color: 'white', textDecoration: 'underline' }}>
                 Login
               </Link>
             </div>
@@ -124,6 +146,5 @@ const Register = () => {
     </div>
   );
 };
-
 
 export default Register;
