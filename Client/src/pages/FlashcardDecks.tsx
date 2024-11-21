@@ -1,23 +1,58 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { db } from '../firebaseConfig';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { auth } from '../firebaseConfig';
+
 import './FlashcardDecks.css';
 
 const FlashcardDecks: React.FC = () => {
-  const [decks, setDecks] = useState([
-    { id: 1, name: 'Deck 1', cards: ['Card 1', 'Card 2', 'Card 3'] },
-    { id: 2, name: 'Deck 2', cards: ['Card 1', 'Card 2', 'Card 3'] },
-    { id: 3, name: 'Deck 3', cards: ['Card 1', 'Card 2', 'Card 3'] },
-  ]);
+  const [decks, setDecks] = useState<{ id: string; name: string; cards: string[] }[]>([]);
+  const userId = auth.currentUser?.uid;
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  // Function to handle creating a new deck
-  const handleCreateNewDeck = () => {
-    const newDeckId = decks.length + 1; // Generate a new ID
-    const newDeck = {
-      id: newDeckId,
-      name: `Deck ${newDeckId}`,
-      cards: ['Card 1', 'Card 2', 'Card 3'], // Initialize with 3 cards
+
+  useEffect(() => {
+    const fetchDecks = async () => {
+      if (!userId) return; // Ensure a user is logged in
+
+      const userDecksRef = collection(db, `users/${userId}/decks`);
+      try {
+        const snapshot = await getDocs(userDecksRef);
+        const fetchedDecks = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as { id: string; name: string; cards: string[] }[];
+        setDecks(fetchedDecks);
+      } catch (err) {
+        console.error("Error fetching decks:", err);
+      }
     };
-    setDecks([...decks, newDeck]); // Update the state with the new deck
+
+    fetchDecks();
+  }, [userId]);
+
+  const handleCreateNewDeck = async () => {
+    if (!userId) {
+      console.error("User not logged in");
+      return;
+    }
+
+    const newDeck = {
+      name: `Deck ${decks.length + 1}`,
+      cards: [],
+      createdAt: new Date(),
+    };
+
+    try {
+      const userDecksRef = collection(db, `users/${userId}/decks`);
+      const docRef = await addDoc(userDecksRef, newDeck);
+      setDecks([...decks, { id: docRef.id, ...newDeck }]);
+      console.log("New deck created:", docRef.id);
+      navigate(`/edit/${docRef.id}`);
+    } catch (err) {
+      console.error("Error creating new deck:", err);
+    }
   };
 
   return (
@@ -25,35 +60,34 @@ const FlashcardDecks: React.FC = () => {
       <h1 className="your-decks-title">Your Decks</h1>
 
       <div className="deck-container">
-        {decks.map((deck) => (
-          <div key={deck.id} className="deck-card">
-            <div className="deck-preview">
-              <div className="card-stack">
-                {deck.cards.slice(0, 3).map((card, index) => (
-                  <div key={index} className={`card ${index === 2 ? 'front-card' : ''}`}>
-                    {card}
-                  </div>
-                ))}
+        {/* Only display decks if there are any */}
+        {decks.length > 0 &&
+          decks.map((deck) => (
+            <div key={deck.id} className="deck-card">
+              <div className="deck-preview">
+                <div className="card-stack">
+                  {deck.cards.slice(0, 3).map((card, index) => (
+                    <div key={index} className={`card ${index === 2 ? 'front-card' : ''}`}>
+                      {card}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="deck-name">{deck.name}</div>
+              <div className="button-container">
+                <Link to={`/edit/${deck.id}`} className="button edit-button">
+                  Edit
+                </Link>
+                <Link to={`/study/${deck.id}`} className="button study-button">
+                  Study
+                </Link>
               </div>
             </div>
-            <div className="deck-name">{deck.name}</div>
-            <div className="button-container">
-              <Link to={`/edit/${deck.id}`} className="button edit-button">
-                Edit
-              </Link>
-              <Link to={`/study/${deck.id}`} className="button study-button">
-                Study
-              </Link>
-            </div>
-          </div>
-        ))}
+          ))}
 
         {/* Create New Deck Button */}
         <div className="create-new-placeholder">
-          <button
-            className="create-new-button"
-            onClick={handleCreateNewDeck} // Updated to call the new function
-          >
+          <button className="create-new-button" onClick={handleCreateNewDeck}>
             +
           </button>
           <div className="create-new-text">Create New</div>

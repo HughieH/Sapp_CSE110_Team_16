@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth, db } from '../firebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
@@ -6,10 +6,12 @@ import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import register from '../assets/register.png';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/AppContext';
 
 
 const Register = () => {
   const navigate = useNavigate();
+  const {setUser} = useContext(UserContext)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -27,8 +29,14 @@ const Register = () => {
         name: name,
         email: user.email,
         createdAt: new Date(),
-        uid: user.uid
+        uid: user.uid,
+        decks: []
       });
+      setUser({
+        uid:user.uid,
+        email:user.email,
+        displayName:name
+      })
       console.log("User registered and data saved to Firestore");
     } catch (err) {
       if (err instanceof Error) {
@@ -57,7 +65,12 @@ const Register = () => {
           uid: user.uid
         });
       }
-      navigate('/timer')
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      });
+      navigate('/timers')
       console.log("User registered with Google and data saved to Firestore");
     } catch (err) {
       if (err instanceof Error) {

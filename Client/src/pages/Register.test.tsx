@@ -7,7 +7,11 @@ import Register from './Register';
 describe('Register Component', () => {
     it('renders registration form', () => {
         render(
-            <BrowserRouter>
+            <BrowserRouter
+            future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true,
+              }}>
                 <Register />
             </BrowserRouter>
         );

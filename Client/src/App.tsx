@@ -7,10 +7,12 @@ import Timer from './pages/Timer';
 import FlashcardDecks from './pages/FlashcardDecks';
 import EditDeck from './pages/EditDeck';
 import StudyDeck from './pages/StudyDeck';
+import { UserProvider } from './context/AppContext';
 
 
 function App() {
   return (
+    <UserProvider>
       <Routes>
         <Route path="/" element={<HomePage />} />  
         <Route path="/register" element={<Register />} />
@@ -20,6 +22,7 @@ function App() {
         <Route path="/edit/:deckId" element={<EditDeck />} />
         <Route path="/study/:deckId" element={<StudyDeck />} />
       </Routes>
+    </UserProvider>
   );
 }
 
