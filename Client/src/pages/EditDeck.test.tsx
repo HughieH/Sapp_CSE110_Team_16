@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import EditDeck from './EditDeck';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('test edit deck page', () => {
 
     test('check if rename deck button renders', () => {
         render(
-            <MemoryRouter>
+            <BrowserRouter>
                 <EditDeck />
-            </MemoryRouter>
+            </BrowserRouter>
         );
         const renameButton = screen.getByTestId('rename deck');
         expect(renameButton).toHaveTextContent('✏️');
@@ -16,9 +16,9 @@ describe('test edit deck page', () => {
 
     test('check if delete deck button renders', () => {
         render(
-            <MemoryRouter>
+            <BrowserRouter>
                 <EditDeck />
-            </MemoryRouter>
+            </BrowserRouter>
         );
         const deleteDeck = screen.getByTestId('delete deck');
         expect(deleteDeck).toHaveTextContent('🗑️');
@@ -26,9 +26,9 @@ describe('test edit deck page', () => {
 
     test('check if go back button renders', () => {
         render(
-            <MemoryRouter>
+            <BrowserRouter>
                 <EditDeck />
-            </MemoryRouter>
+            </BrowserRouter>
         );
         const goBack = screen.getByTestId('back button');
         expect(goBack).toHaveTextContent('Go Back');
@@ -36,9 +36,9 @@ describe('test edit deck page', () => {
 
     test('check if adding/deleting a card works', () => {
         render(
-            <MemoryRouter>
+            <BrowserRouter>
                 <EditDeck />
-            </MemoryRouter>
+            </BrowserRouter>
         );
 
         // const frontText = screen.getByTestId('front-text');

@@ -124,6 +124,7 @@ const Register = () => {
           <img src={register} alt="Additional" className="additional-image" />
         </div>
       </div>
+    </div>
   );
 };
 

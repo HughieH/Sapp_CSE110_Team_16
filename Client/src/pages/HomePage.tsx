@@ -6,16 +6,6 @@ import { Link } from 'react-router-dom'
 
 
 const HomePage = () => {
-  const navigate = useNavigate();
-
-  const handleLoginClick = () => {
-    navigate('/login');
-  };
-
-  const handleRegisterClick = () => {
-    navigate('/register');
-  }
-
   return (
     <>
     <div data-testid="Home" className="grow flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center">

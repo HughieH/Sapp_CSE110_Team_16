@@ -1,15 +1,15 @@
 // FlashcardDecks.test.tsx
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import FlashcardDecks from './FlashcardDecks';
 
 describe('FlashcardDecks Component', () => {
   test('renders initial decks correctly', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <FlashcardDecks />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     // Check if each deck is rendered with correct names
@@ -20,9 +20,9 @@ describe('FlashcardDecks Component', () => {
 
   test('renders correct number of cards for each deck preview', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <FlashcardDecks />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     const cardElements = screen.getAllByText(/Card \d/);
@@ -31,9 +31,9 @@ describe('FlashcardDecks Component', () => {
 
   test('Edit and Study buttons have correct links', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <FlashcardDecks />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     // Check if Edit and Study buttons are present and have correct links
@@ -49,9 +49,9 @@ describe('FlashcardDecks Component', () => {
 
   test('creates a new deck when Create New button is clicked', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <FlashcardDecks />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     const createButton = screen.getByText('+');
@@ -63,9 +63,9 @@ describe('FlashcardDecks Component', () => {
 
   test('new deck contains three initial cards', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter>
         <FlashcardDecks />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     const createButton = screen.getByText('+');
