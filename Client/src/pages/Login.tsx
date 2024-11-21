@@ -4,7 +4,7 @@ import {auth} from '../firebaseConfig'
 import logo from '../assets/logo.png';
 import image from '../assets/image.png';
 import { Link } from 'react-router-dom';
-import './Login.css';
+import './login.css';
 
 const Login = () => {
  const [email, setEmail] = useState<string>('');
