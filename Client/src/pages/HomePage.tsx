@@ -4,22 +4,33 @@ import BookIcon from '../assets/icons/book-icon-homepage.png'
 
 import { Link } from 'react-router-dom'
 
+
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleRegisterClick = () => {
+    navigate('/register');
+  }
+
   return (
     <>
     <div data-testid="Home" className="grow flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center">
       <div className="flex items-center mb-2">
-        <h1 className="text-4xl font-bold text-green-600 mr-2">SAPP</h1>
-        <img src={BookIcon} alt="Book Icon" className="w-8 h-8" />
+        <h1 className="text-8xl font-bold text-green-600 mr-2">SAPP</h1>
+        <img src={BookIcon} alt="Book Icon" className="w-16 h-16" />
       </div>
-      <p className="text-lg italic text-green-400 mb-6">the best study pal in the world...</p>
+      <p className="text-xl italic text-green-500 mb-6"> the best study pal in the world... </p>
       <div className="mb-6">
-        <div className="w-36 h-36 bg-green-100 rounded-full flex items-center justify-center">
+        <div className="bg-gray-100 rounded-full flex items-center justify-center">
           {/* Replace the placeholder below with your actual logo */}
           <img
             src={SappLogo}
             alt="SAPP Logo"
-            className=""
+            className="w-72 h-72"
           />
         </div>
       </div>
