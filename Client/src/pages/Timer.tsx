@@ -40,7 +40,7 @@ const Timer: React.FC = () => {
   };
 
   return (
-    <div className="bg-white flex flex-col justify-center items-center h-screen">
+    <div data-testid="Timer" className="bg-white flex flex-col justify-center items-center h-screen">
       <h2
         className={`${
           isRunning

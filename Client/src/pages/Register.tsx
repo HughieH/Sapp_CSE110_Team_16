@@ -71,7 +71,7 @@ const Register = () => {
   };
 
   return (
-    <div className="container">
+    <div data-testid="Register" className="container">
       <div className="left-panel">
         <img src={logo} alt="Logo" className="logo" />
       </div>
@@ -124,7 +124,6 @@ const Register = () => {
           <img src={register} alt="Additional" className="additional-image" />
         </div>
       </div>
-    </div>
   );
 };
 
