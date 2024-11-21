@@ -7,6 +7,13 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  theme: {
+    extend: {
+      colors: {
+        'sapp-green': '#98C98E',
+      },
+    }
+  }
 };
 
 

@@ -44,7 +44,7 @@ const Login = () => {
  };
 
  return (
-   <div className="container">
+   <div data-testid="Login" className="container">
             <div className="left-panel">
                 <img src={logo} alt="Logo" className="logo" />
             </div>
