@@ -75,7 +75,7 @@ const EditDeck: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="min-h-screen p-10">
       <div className="header">
         <h1 className="deck-title">{deckName}</h1>
         <button className="edit-icon-button" onClick={handleEditDeckName} data-testid="rename deck">

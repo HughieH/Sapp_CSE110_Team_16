@@ -44,11 +44,8 @@ const Login = () => {
  };
 
  return (
-   <div data-testid="Login" className="container">
-            <div className="left-panel">
-                <img src={logo} alt="Logo" className="logo" />
-            </div>
-            
+   <div data-testid="Login" className="grow flex flex-col items-center justify-center min-h-screen">
+
             <div className="right-panel">
                 <div className="login-content">
                     <div className="login-container">

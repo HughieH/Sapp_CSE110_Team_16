@@ -5,10 +5,6 @@ import App from './App'
 import Toolbar from './components/Toolbar'
 import Navbar from './components/Navbar'
 
-interface toolbarProps {
-    onButtonClick: () => void;
-}
-
 const PageContainer = () => {
     const [message, setMessage] = useState(true);
 

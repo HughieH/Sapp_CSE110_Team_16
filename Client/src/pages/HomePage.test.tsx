@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import HomePage from './HomePage';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ describe('HomePage Component', () => {
     render(<BrowserRouter>
               <HomePage />
             </BrowserRouter>);
+
     // Check if the title "SAPP" is present
     const titleElement = screen.getByText(/SAPP/i);
     expect(titleElement).toBeInTheDocument();
@@ -31,11 +31,5 @@ describe('HomePage Component', () => {
     // Check if "Create Account" button is present
     const createAccountButton = screen.getByText(/Create Account/i);
     expect(createAccountButton).toBeInTheDocument();
-  });
-});
-
-describe('NavBar Component', () => {
-  test('', () => {
-
   });
 });
