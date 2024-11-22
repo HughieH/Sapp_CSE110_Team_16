@@ -357,3 +357,127 @@
   text-decoration: none;
   color: #388e3c;
 }
+
+.study-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f9fbe7;
+}
+
+/* Sidebar for statistics */
+.statistics-sidebar {
+  flex: 1;
+  background-color: #e8f5e9;
+  border-right: 2px solid #388e3c;
+  padding: 20px;
+  text-align: left;
+  font-size: 1rem;
+  color: #2e7d32;
+}
+
+.statistics-sidebar h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.completion-percentage {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #388e3c;
+}
+
+/* Main study area */
+.study-main {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.flashcard {
+  width: 300px;
+  height: 200px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #a5d6a7, #81c784);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  margin: 20px 0;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s, background 0.5s;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  backface-visibility: hidden;
+}
+
+.flashcard-front {
+  background: linear-gradient(135deg, #66bb6a, #388e3c);
+  color: white;
+}
+
+.flashcard-back {
+  background: linear-gradient(135deg, #ef5350, #d32f2f);
+  color: white;
+  transform: rotateY(180deg);
+}
+.study-container {
+  display: flex;
+  height: 100vh;
+}
+
+.stats-sidebar {
+  width: 200px;
+  background-color: #e8f5e9;
+  padding: 20px;
+  text-align: left;
+  border-right: 2px solid #c8e6c9;
+}
+
+.stats-sidebar h2 {
+  font-size: 1.5rem;
+  color: #388e3c;
+  margin-bottom: 10px;
+}
+
+.stats-sidebar p {
+  font-size: 1rem;
+  color: #2e7d32;
+  margin: 5px 0;
+}
+
+.study-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}

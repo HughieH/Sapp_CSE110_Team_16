@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { CheckCircle, Close, NotInterested, Refresh, Shuffle, Replay } from '@mui/icons-material'; // Material UI Icons
+import { CheckCircle, Close, NotInterested, Replay } from "@mui/icons-material";
 import "./StudyDeck.css";
 
 interface Flashcard {
@@ -9,21 +9,16 @@ interface Flashcard {
   backContent: string;
 }
 
-interface Deck {
-  id: number;
-  name: string;
-  cards: Flashcard[];
-}
-
 const StudyDeck: React.FC = () => {
   const { deckId } = useParams<{ deckId: string }>();
   const [deckCards, setDeckCards] = useState<Flashcard[]>([
-    { id: 1, frontContent: "Front 1", backContent: "Back 1" },
-    { id: 2, frontContent: "Front 2", backContent: "Back 2" },
-    { id: 3, frontContent: "Front 3", backContent: "Back 3" },
-    { id: 4, frontContent: "Front 4", backContent: "Back 4" },
-    { id: 5, frontContent: "Front 5", backContent: "Back 5" },
-    { id: 6, frontContent: "Front 6", backContent: "Back 6" },
+    { id: 1, frontContent: "What is the capital of France?", backContent: "Paris" },
+    { id: 2, frontContent: "What is 2 + 2?", backContent: "4" },
+    { id: 3, frontContent: "What is the largest planet in the solar system?", backContent: "Jupiter" },
+    { id: 4, frontContent: "Who wrote 'To Kill a Mockingbird'?", backContent: "Harper Lee" },
+    { id: 5, frontContent: "What is the boiling point of water in Celsius?", backContent: "100°C" },
+    { id: 6, frontContent: "Who painted the Mona Lisa?", backContent: "Leonardo da Vinci" },
+    { id: 7, frontContent: "What is the chemical symbol for gold?", backContent: "Au" },
   ]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -79,6 +74,15 @@ const StudyDeck: React.FC = () => {
   };
 
   const restudyDeck = () => {
+    setDeckCards([
+      { id: 1, frontContent: "What is the capital of France?", backContent: "Paris" },
+      { id: 2, frontContent: "What is 2 + 2?", backContent: "4" },
+      { id: 3, frontContent: "What is the largest planet in the solar system?", backContent: "Jupiter" },
+      { id: 4, frontContent: "Who wrote 'To Kill a Mockingbird'?", backContent: "Harper Lee" },
+      { id: 5, frontContent: "What is the boiling point of water in Celsius?", backContent: "100°C" },
+      { id: 6, frontContent: "Who painted the Mona Lisa?", backContent: "Leonardo da Vinci" },
+      { id: 7, frontContent: "What is the chemical symbol for gold?", backContent: "Au" },
+    ]);
     setCurrentCardIndex(0);
     setIsFlipped(false);
     setDeckCompleted(false);
@@ -86,83 +90,83 @@ const StudyDeck: React.FC = () => {
     setIncorrectCards([]);
   };
 
+  const successPercentage = (stats.correct / deckCards.length) * 100;
+
   return (
     <div className="study-container">
-      <h1 className="deck-title">Deck {deckId}</h1>
+      <aside className="stats-sidebar">
+        <h2>Statistics</h2>
+        <p>
+          <CheckCircle /> Correct: {stats.correct}
+        </p>
+        <p>
+          <Close /> Wrong: {stats.wrong}
+        </p>
+        <p>
+          <NotInterested /> Ignored: {stats.ignore}
+        </p>
+        <p>Card: {currentCardIndex + 1} / {deckCards.length}</p>
+      </aside>
 
-      {deckCompleted ? (
-        <div className="deck-completed">
-          <h2 className="deck-completed-message">🎉 You've finished the deck! 🎉</h2>
-          <div className="completion-actions">
-            <button className="action-button restudy-button" onClick={restudyDeck}>
-              <Replay />
-              Restudy Deck
-            </button>
-            <Link to="/decks" className="action-button exit-button">
-              Exit to Decks
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <>
-          <div className="progress">
-            <p>
-              Card {currentCardIndex + 1} / {deckCards.length}
-            </p>
-          </div>
+      <div className="study-content">
+        <h1 className="deck-title">Deck {deckId}</h1>
 
-          <div className="flashcard" onClick={toggleFlip}>
-            <div className={`flashcard-inner ${isFlipped ? "flipped" : ""}`}>
-              <div className="flashcard-front">
-                <p>{currentCard.frontContent}</p>
-              </div>
-              <div className="flashcard-back">
-                <p>{currentCard.backContent}</p>
-              </div>
+        {deckCompleted ? (
+          <div className="deck-completed">
+            <h2 className="deck-completed-message">🎉 You've finished the deck! 🎉</h2>
+            <p>Success: {successPercentage.toFixed(2)}%</p>
+            <div className="completion-actions">
+              <button className="action-button restudy-button" onClick={restudyDeck}>
+                <Replay />
+                Restudy Deck
+              </button>
+              <Link to="/decks" className="action-button exit-button">
+                Exit to Decks
+              </Link>
             </div>
           </div>
+        ) : (
+          <>
+            <div className="flashcard" onClick={toggleFlip}>
+              <div className={`flashcard-inner ${isFlipped ? "flipped" : ""}`}>
+                <div className="flashcard-front">
+                  <p>{currentCard.frontContent}</p>
+                </div>
+                <div className="flashcard-back">
+                  <p>{currentCard.backContent}</p>
+                </div>
+              </div>
+            </div>
 
-          <div className="counter-container">
-            <span className="counter">
-              <Close fontSize="small" /> {stats.wrong}
-            </span>
-            <span className="counter">
-              <CheckCircle fontSize="small" /> {stats.correct}
-            </span>
-            <span className="counter">
-              <NotInterested fontSize="small" /> {stats.ignore}
-            </span>
-          </div>
-
-          <div className="button-group">
-            <button className="study-button wrong-button" onClick={() => markCard("wrong")}>
-              <Close fontSize="large" />
-            </button>
-            <button className="study-button correct-button" onClick={() => markCard("correct")}>
-              <CheckCircle fontSize="large" />
-            </button>
-            <button className="study-button ignore-button" onClick={() => markCard("ignore")}>
-              <NotInterested fontSize="large" />
-            </button>
-          </div>
-
-          <div className="actions">
-            <button className="action-button shuffle-button" onClick={shuffleDeck}>
-              <Shuffle fontSize="large" />
-            </button>
-            {incorrectCards.length > 0 && (
-              <button className="action-button review-button" onClick={reviewIncorrect}>
-                <Refresh fontSize="large" />
-                Review Incorrect Cards
+            <div className="button-group">
+              <button className="study-button wrong-button" onClick={() => markCard("wrong")}>
+                <Close fontSize="large" />
               </button>
-            )}
-          </div>
-        </>
-      )}
+              <button className="study-button correct-button" onClick={() => markCard("correct")}>
+                <CheckCircle fontSize="large" />
+              </button>
+              <button className="study-button ignore-button" onClick={() => markCard("ignore")}>
+                <NotInterested fontSize="large" />
+              </button>
+            </div>
 
-      <Link to="/decks" className="go-back-link">
-        Go Back
-      </Link>
+            <div className="actions">
+              <button className="action-button shuffle-button" onClick={shuffleDeck}>
+                Shuffle Deck
+              </button>
+              {incorrectCards.length > 0 && (
+                <button className="action-button review-button" onClick={reviewIncorrect}>
+                  Review Incorrect Cards
+                </button>
+              )}
+            </div>
+          </>
+        )}
+
+        <Link to="/decks" className="go-back-link">
+          Go Back
+        </Link>
+      </div>
     </div>
   );
 };
