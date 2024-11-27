@@ -21,7 +21,7 @@ const FlashcardDecks: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div data-testid="Decks" style={{ padding: '20px' }}>
       <h1 className="your-decks-title">Your Decks</h1>
 
       <div className="deck-container">
