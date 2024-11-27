@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import PageContainer from '../PageContainer';
 import { BrowserRouter } from 'react-router-dom';
-
-import userEvent from '@testing-library/user-event'
 
 describe('NavBar Component', () => {
     test('Navbar collapsability functions properly', () => {
@@ -20,15 +18,15 @@ describe('NavBar Component', () => {
         expect(navbarElement).toBeInTheDocument();
         const toolbarElement = screen.getByTestId("Toolbar");
         expect(toolbarElement).toBeInTheDocument();
-        const collapserElement = screen.getByTestId("Collapser")
+        const collapserElement = screen.getByTestId("Collapser");
         expect(collapserElement).toBeInTheDocument();
 
-        userEvent.click(collapserElement);
+        fireEvent.click(collapserElement);
         expect(navbarElement).not.toBeInTheDocument();
         expect(toolbarElement).toBeInTheDocument();
         expect(collapserElement).toBeInTheDocument();
 
-        userEvent.click(collapserElement);
+        fireEvent.click(collapserElement);
         navbarElement = screen.getByTestId("Navbar");
         expect(navbarElement).toBeInTheDocument();
         expect(toolbarElement).toBeInTheDocument();
@@ -61,16 +59,16 @@ describe('NavBar Component', () => {
         var appElement = screen.getByTestId("Home");
         expect(appElement).toBeInTheDocument();
         
-        userEvent.click(decksIconElement);
+        fireEvent.click(decksIconElement);
         expect(appElement).not.toBeInTheDocument();
         appElement = screen.getByTestId("Decks");
-        userEvent.click(timerIconElement);
+        fireEvent.click(timerIconElement);
         expect(appElement).not.toBeInTheDocument();
         appElement = screen.getByTestId("Timer");
-        userEvent.click(profileIconElement);
+        fireEvent.click(profileIconElement);
         expect(appElement).not.toBeInTheDocument();
         appElement = screen.getByTestId("Profile");
-        userEvent.click(homeIconElement);
+        fireEvent.click(homeIconElement);
         expect(appElement).not.toBeInTheDocument();
         appElement = screen.getByTestId("Home");
     });
