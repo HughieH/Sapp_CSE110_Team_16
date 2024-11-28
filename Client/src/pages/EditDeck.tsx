@@ -75,70 +75,60 @@ const EditDeck: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div className="header">
-        <h1 className="deck-title">{deckName}</h1>
-        <button className="edit-icon-button" onClick={handleEditDeckName} data-testid="rename deck">
-          ✏️
-        </button>
-        <button className="delete-icon-button" onClick={handleDeleteDeck} data-testid="delete deck">
-          🗑️
-        </button>
-      </div>
-
-      <Link to="/decks" style={{ color: '#2E7D32', fontWeight: 'bold' }} data-testid="back button">
-        Go Back
-      </Link>
-
-      <div className="flashcard-edit-container">
+    <div className="edit-deck-container">
+      <header className="deck-header">
+        <div className="deck-header-left">
+          <h1>{deckName}</h1>
+          <button className="icon-button" onClick={handleEditDeckName} data-testid="rename deck" title="Rename Deck">
+            ✏️
+          </button>
+        </div>
+        <div className="deck-header-right">
+          <button className="icon-button delete" onClick={handleDeleteDeck} data-testid="delete deck" title="Delete Deck">
+            🗑️
+          </button>
+          <Link to="/decks" className="back-button" data-testid="back button">
+            Go Back
+          </Link>
+        </div>
+      </header>
+  
+      <main className="flashcards-container">
         {flashcards.map((card) => (
           <div key={card.id} className="flashcard">
             <div className="flashcard-content">
-              <div>
-                <label>Front:</label>
-                <input
-                  type="text"
+              <label>
+                Front:
+                <textarea
                   value={card.frontContent}
                   onChange={(e) => handleEditCard(card.id, 'front', e.target.value)}
-                  data-testid="front-text"
                   placeholder="Enter front content"
+                  data-testid="front-text"
                 />
-              </div>
-              <div>
-                <label>Back:</label>
-                <input
-                  type="text"
+              </label>
+              <label>
+                Back:
+                <textarea
                   value={card.backContent}
                   onChange={(e) => handleEditCard(card.id, 'back', e.target.value)}
-                  data-testid="back-text"
                   placeholder="Enter back content"
+                  data-testid="back-text"
                 />
-              </div>
+              </label>
             </div>
             <div className="flashcard-actions">
-              <button
-                className="edit-icon"
-                onClick={() => handleEditCard(card.id, 'front', card.frontContent)}
-              >
-                ✏️
-              </button>
-              <button
-                className="delete-icon"
-                onClick={() => handleDeleteCard(card.id)}
-              >
-                🗑️
-              </button>
+              <button onClick={() => handleEditCard(card.id, 'front', card.frontContent)}>✏️ Edit</button>
+              <button onClick={() => handleDeleteCard(card.id)}>🗑️ Delete</button>
             </div>
           </div>
         ))}
-
-        <div className="flashcard create-new-card" onClick={() => setFlashcards([...flashcards, { id: flashcards.length + 1, frontContent: '', backContent: '' }])}>
-          <div className="create-icon-circle">+</div>
-          <div className="create-new-text">Create New</div>
+        <div className="flashcard new-flashcard" onClick={() => setFlashcards([...flashcards, { id: flashcards.length + 1, frontContent: '', backContent: '' }])}>
+          <div className="add-icon">+</div>
+          <span>Add New Card</span>
         </div>
-      </div>
+      </main>
     </div>
-  );
-};
+   );
+  };  
 
 export default EditDeck;
