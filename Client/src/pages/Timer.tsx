@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 const Timer: React.FC = () => {
   const [time, setTime] = useState<number>(0); // Time in milliseconds
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [laps, setLaps] = useState<number[]>([]); // Array to store lap times
 
   // Convert time to MM:SS:ms format
   const formatTime = (milliseconds: number): string => {
@@ -37,10 +38,19 @@ const Timer: React.FC = () => {
   const resetTimer = (): void => {
     setIsRunning(false);
     setTime(0);
+    setLaps([]); // Clear lap times
+  };
+
+  // Add a lap
+  const addLap = (): void => {
+    setLaps((prevLaps) => [...prevLaps, time]); // Append current time to laps
   };
 
   return (
-    <div data-testid="Timer" className="bg-white flex flex-col justify-center items-center h-screen">
+    <div
+      data-testid="Timer"
+      className="bg-white flex flex-col justify-center items-center h-screen"
+    >
       <h2
         className={`${
           isRunning
@@ -53,10 +63,12 @@ const Timer: React.FC = () => {
 
       <div
         className={`${
-          isRunning ? "border-yellow-200 text-yellow-900" : "border-green-200 text-green-900"
+          isRunning
+            ? "border-yellow-200 text-yellow-900"
+            : "border-green-200 text-green-900"
         } w-5/12 h-32 border-4 rounded-2xl text-center text-7xl font-bold  mt-2 bg-white px-6 py-2 flex items-center justify-center`}
       >
-          {formatTime(time)}
+        {formatTime(time)}
       </div>
 
       <div className="flex space-x-4 mt-6">
@@ -75,6 +87,28 @@ const Timer: React.FC = () => {
         >
           Finish
         </button>
+        <button
+          onClick={addLap}
+          className="w-32 px-4 py-2 bg-blue-500 rounded-lg text-white font-bold 
+          transform hover:scale-110 transition duration-300"
+        >
+          Lap
+        </button>
+      </div>
+
+      <div className="mt-8 w-5/12">
+        <h3 className="text-xl font-bold mb-2 text-center">Lap Times</h3>
+        <ul className="list-decimal list-inside bg-gray-100 p-4 rounded-lg">
+          {laps.length > 0 ? (
+            laps.map((lap, index) => (
+              <li key={index} className="text-lg font-mono">
+                Lap {index + 1}: {formatTime(lap)}
+              </li>
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No laps recorded</p>
+          )}
+        </ul>
       </div>
     </div>
   );
