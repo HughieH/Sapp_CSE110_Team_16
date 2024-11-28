@@ -4,6 +4,10 @@ const Timer: React.FC = () => {
   const [time, setTime] = useState<number>(0); // Time in milliseconds
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [laps, setLaps] = useState<number[]>([]); // Array to store lap times
+  const [sessionTime, setSessionTime] = useState<number>(0); // Time studied in this session
+  const [weeklyTime, setWeeklyTime] = useState<number>(
+    Number(localStorage.getItem("weeklyTime")) || 0
+  ); // Time studied this week
 
   // Convert time to MM:SS:ms format
   const formatTime = (milliseconds: number): string => {
@@ -25,6 +29,7 @@ const Timer: React.FC = () => {
     if (isRunning) {
       timer = setInterval(() => {
         setTime((prevTime) => prevTime + 10); // Increment by 10 ms
+        setSessionTime((prevSessionTime) => prevSessionTime + 10);
       }, 10);
     } else if (!isRunning && time !== 0) {
       clearInterval(timer);
@@ -34,11 +39,18 @@ const Timer: React.FC = () => {
     };
   }, [isRunning]);
 
+  // Save weeklyTime to localStorage whenever it updates
+  useEffect(() => {
+    localStorage.setItem("weeklyTime", String(weeklyTime));
+  }, [weeklyTime]);
+
   // Reset the timer
   const resetTimer = (): void => {
     setIsRunning(false);
     setTime(0);
     setLaps([]); // Clear lap times
+    setWeeklyTime((prevWeeklyTime) => prevWeeklyTime + sessionTime); // Add session time to weekly total
+    setSessionTime(0); // Reset session time
   };
 
   // Add a lap
@@ -49,8 +61,9 @@ const Timer: React.FC = () => {
   return (
     <div
       data-testid="Timer"
-      className="bg-white flex flex-col justify-center items-center h-screen"
+      className="bg-white flex flex-col justify-center items-center h-screen relative"
     >
+      {/* Timer header */}
       <h2
         className={`${
           isRunning
@@ -61,16 +74,18 @@ const Timer: React.FC = () => {
         {isRunning ? "Studying..." : "Study! Lock in >:)"}
       </h2>
 
+      {/* Timer display */}
       <div
         className={`${
           isRunning
             ? "border-yellow-200 text-yellow-900"
             : "border-green-200 text-green-900"
-        } w-5/12 h-32 border-4 rounded-2xl text-center text-7xl font-bold  mt-2 bg-white px-6 py-2 flex items-center justify-center`}
+        } w-5/12 h-32 border-4 rounded-2xl text-center text-7xl font-bold mt-2 bg-white px-6 py-2 flex items-center justify-center`}
       >
         {formatTime(time)}
       </div>
 
+      {/* Timer controls */}
       <div className="flex space-x-4 mt-6">
         <button
           onClick={() => setIsRunning(!isRunning)}
@@ -96,6 +111,7 @@ const Timer: React.FC = () => {
         </button>
       </div>
 
+      {/* Lap times */}
       <div className="mt-8 w-5/12">
         <h3 className="text-xl font-bold mb-2 text-center">Lap Times</h3>
         <ul className="list-decimal list-inside bg-gray-100 p-4 rounded-lg">
@@ -109,6 +125,18 @@ const Timer: React.FC = () => {
             <p className="text-center text-gray-500">No laps recorded</p>
           )}
         </ul>
+      </div>
+
+      {/* Time Stats */}
+      <div
+        className="absolute top-4 right-4 p-4 bg-green-100 rounded-lg shadow-lg"
+      >
+        <p className="text-green-800 font-bold">
+          Total Time This Session: {formatTime(sessionTime)}
+        </p>
+        <p className="text-green-800 font-bold">
+          Total Time This Week: {formatTime(weeklyTime)}
+        </p>
       </div>
     </div>
   );
