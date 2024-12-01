@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Recommend from './Recommend';
 import '@testing-library/jest-dom';
 
-jest.useFakeTimers(); // Jest의 타이머 mocking 활성화
+jest.useFakeTimers(); 
 
 describe('Recommend Component', () => {
   it('renders the "Insert Coin" button initially', () => {
@@ -16,10 +16,10 @@ describe('Recommend Component', () => {
 
     fireEvent.click(screen.getByText('Insert Coin'));
 
-    // 타이머가 3초 뒤로 이동하도록 처리
+
     jest.advanceTimersByTime(3000);
 
-    // 상태가 업데이트되는지 확인
+
     await waitFor(() =>
       expect(
         screen.getByText(/Active Recall|Pomodoro Technique|Spaced Repetition|Mind Mapping|Feynman Technique/)
