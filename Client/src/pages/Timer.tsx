@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { useAuth } from "../context/AuthContext";
 
 const Timer: React.FC = () => {
   const [time, setTime] = useState<number>(0); // Time in milliseconds
@@ -8,6 +11,7 @@ const Timer: React.FC = () => {
   const [weeklyTime, setWeeklyTime] = useState<number>(
     Number(localStorage.getItem("weeklyTime")) || 0
   ); // Time studied this week
+  const { currentUser } = useAuth();
 
   // Convert time to MM:SS:ms format
   const formatTime = (milliseconds: number): string => {
@@ -44,12 +48,37 @@ const Timer: React.FC = () => {
     localStorage.setItem("weeklyTime", String(weeklyTime));
   }, [weeklyTime]);
 
+  // Save data to Firestore
+  const saveTimeToFirestore = async (totalTime: number) => {
+    if (!currentUser) return;
+
+    try {
+      const userRef = doc(db, "users", currentUser.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const existingTotalTime = userDoc.data().totalStudyTime || 0;
+        await updateDoc(userRef, {
+          totalStudyTime: existingTotalTime + totalTime, // Add session time to total
+        });
+      } else {
+        await setDoc(userRef, {
+          totalStudyTime: totalTime, // Create totalStudyTime if it doesn't exist
+        });
+      }
+      console.log("Study time saved to Firestore");
+    } catch (error) {
+      console.error("Error saving study time to Firestore:", error);
+    }
+  };
+
   // Reset the timer
   const resetTimer = (): void => {
     setIsRunning(false);
     setTime(0);
     setLaps([]); // Clear lap times
     setWeeklyTime((prevWeeklyTime) => prevWeeklyTime + sessionTime); // Add session time to weekly total
+    saveTimeToFirestore(sessionTime); // Save session time to Firestore
     setSessionTime(0); // Reset session time
   };
 
@@ -57,6 +86,15 @@ const Timer: React.FC = () => {
   const addLap = (): void => {
     setLaps((prevLaps) => [...prevLaps, time]); // Append current time to laps
   };
+
+  // Save time when the component unmounts
+  useEffect(() => {
+    return () => {
+      if (sessionTime > 0) {
+        saveTimeToFirestore(sessionTime);
+      }
+    };
+  }, [sessionTime]);
 
   return (
     <div
