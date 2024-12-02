@@ -1,79 +1,93 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 import './StudyDeck.css';
 
-interface Flashcard {
-  id: number;
+type Flashcard = {
+  id: string;
   frontContent: string;
   backContent: string;
-}
+};
 
-interface Deck {
-  id: number;
+type Deck = {
+  id: string;
   name: string;
   cards: Flashcard[];
-}
+};
 
 const StudyDeck: React.FC = () => {
   const { deckId } = useParams<{ deckId: string }>();
-  const [currentCardIndex, setCurrentCardIndex] = useState(0); // Track the current card
-  const [isFlipped, setIsFlipped] = useState(false); // Track card flip state
+  const [deck, setDeck] = useState<Deck | null>(null);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const navigate = useNavigate();
 
-  // Dummy deck data (replace this with actual data)
-  const deck: Deck = {
-    id: parseInt(deckId || '0', 10),
-    name: `Deck ${deckId}`,
-    cards: [
-      { id: 1, frontContent: 'Front 1', backContent: 'Back 1' },
-      { id: 2, frontContent: 'Front 2', backContent: 'Back 2' },
-      { id: 3, frontContent: 'Front 3', backContent: 'Back 3' },
-    ],
-  };
+  useEffect(() => {
+    const fetchDeck = async () => {
+      if (!deckId) return;
 
-  const currentCard = deck.cards[currentCardIndex];
+      try {
+        const docRef = doc(db, 'decks', deckId);
+        const docSnapshot = await getDoc(docRef);
 
-  // Toggle flip state on button press
-  const toggleFlip = () => {
-    setIsFlipped((prevState) => !prevState); // Toggle flip state
-  };
+        if (docSnapshot.exists()) {
+          setDeck({ id: deckId, ...(docSnapshot.data() as Omit<Deck, 'id'>) });
+        } else {
+          console.error('Deck not found');
+        }
+      } catch (error) {
+        console.error('Error fetching deck:', error);
+      }
+    };
 
-  // Move to next card
+    fetchDeck();
+  }, [deckId]);
+
+  const currentCard = deck?.cards[currentCardIndex];
+
+  const toggleFlip = () => setIsFlipped((prevState) => !prevState);
+
   const nextCard = () => {
-    if (currentCardIndex < deck.cards.length - 1) {
-      setCurrentCardIndex((prevIndex) => prevIndex + 1); // Move to the next card
-      setIsFlipped(false); // Reset flip to front when moving to the next card
+    if (currentCardIndex < (deck?.cards.length || 0) - 1) {
+      setCurrentCardIndex((prevIndex) => prevIndex + 1);
+      setIsFlipped(false);
+    } else {
+      navigate('/decks');
     }
   };
 
-  // Move to previous card
   const previousCard = () => {
     if (currentCardIndex > 0) {
-      setCurrentCardIndex((prevIndex) => prevIndex - 1); // Move to the previous card
-      setIsFlipped(false); // Reset flip to front when moving to the previous card
+      setCurrentCardIndex((prevIndex) => prevIndex - 1);
+      setIsFlipped(false);
     }
   };
+
+  if (!deck) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="study-container">
       <h1 className="deck-title">{deck.name}</h1>
 
-      <div className="flashcard" onClick={toggleFlip}>
-        <div className={`flashcard-inner ${isFlipped ? 'flipped' : ''}`}>
-          <div className="flashcard-front">
-            <p>{currentCard.frontContent}</p>
-          </div>
-          <div className="flashcard-back">
-            <p>{currentCard.backContent}</p>
+      {currentCard ? (
+        <div className="flashcard" onClick={toggleFlip}>
+          <div className={`flashcard-inner ${isFlipped ? 'flipped' : ''}`}>
+            <div className="flashcard-front">
+              <p>{currentCard.frontContent}</p>
+            </div>
+            <div className="flashcard-back">
+              <p>{currentCard.backContent}</p>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <p>No cards available.</p>
+      )}
 
-      {/* Flip Card Button */}
-      <button className="flip-button" onClick={toggleFlip} data-testid="flip button">
-        Flip Card
-      </button>
-
-      <div className="button-group">
+<div className="button-group">
         <button className="study-button wrong-button" onClick={nextCard} data-testid="wrong button">
           Wrong
         </button>
@@ -86,15 +100,19 @@ const StudyDeck: React.FC = () => {
       </div>
 
       <div className="navigation-buttons">
-        <button className="study-button" onClick={previousCard} disabled={currentCardIndex === 0} data-testid="prev button">
+        <button className="study-button" onClick={previousCard} disabled={currentCardIndex === 0}>
           Previous
         </button>
-        <button className="study-button" onClick={nextCard} disabled={currentCardIndex === deck.cards.length - 1} data-testid="next button">
+        <button
+          className="study-button"
+          onClick={nextCard}
+          disabled={currentCardIndex === (deck?.cards.length || 0) - 1 && !currentCard}
+        >
           Next
         </button>
       </div>
 
-      <Link to="/decks" className="go-back-link" data-testid="back button">
+      <Link to="/decks" className="go-back-link">
         Go Back
       </Link>
     </div>

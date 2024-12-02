@@ -1,12 +1,17 @@
 import React from 'react';
 import ProfileIcon from '../assets/icons/profile icon.png'
+import { useAuth } from '../context/AuthContext'; 
+
 
 const Profile = () => {
+  const { currentUser } = useAuth();
   return (
     <div data-testid="Profile" className="flex flex-col items-center min-h-screen bg-white text-black">
       <div data-testid="ProfileIcon" className="flex flex-col pt-5 px-20 my-20 items-center justify-items w-72 h-42 bg-sapp-green rounded-3xl text-center text-nowrap">
         <img className="w-28" src={ProfileIcon}/>
-        <div className="text-white font-bold text-xl"><h1>YOUR NAME</h1></div>
+        <div className="text-white font-bold text-xl">
+          <h1>{currentUser ? currentUser.displayName || currentUser.email : 'Log In'}</h1>
+        </div>
       </div>
       <div className="px-5 w-5/6">
         <h1 data-testid="ProfileStatistics" className="text-5xl font-bold text-sapp-leaf pl-2 pb-5">

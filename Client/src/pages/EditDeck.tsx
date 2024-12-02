@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
+import { useAuth } from '../context/AuthContext';
 import './EditDeck.css';
 
 interface Flashcard {
@@ -8,69 +11,94 @@ interface Flashcard {
   backContent: string;
 }
 
+interface Deck {
+  name: string;
+  cards: Flashcard[];
+  userId: string;
+}
+
 const EditDeck: React.FC = () => {
   const { deckId } = useParams<{ deckId: string }>();
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
-  // State for deck name and flashcards
-  const [deckName, setDeckName] = useState(`Deck ${deckId}`);
+  const [deckName, setDeckName] = useState<string>('');
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 
-  // Load deck data from localStorage when the component mounts
-  const loadDeckData = () => {
-    const savedDeckName = localStorage.getItem(`deckName-${deckId}`);
-    const savedFlashcards = localStorage.getItem(`flashcards-${deckId}`);
-
-    if (savedDeckName) {
-      setDeckName(savedDeckName);
-    }
-    if (savedFlashcards) {
-      setFlashcards(JSON.parse(savedFlashcards));
-    }
-  };
-
-  // Load data when the component mounts
   useEffect(() => {
-    loadDeckData();
-  }, [deckId]);
+    const loadDeckData = async () => {
+      if (!deckId || !currentUser) return;
 
-  // Save data to localStorage
-  const saveDeckData = () => {
-    localStorage.setItem(`deckName-${deckId}`, deckName);
-    localStorage.setItem(`flashcards-${deckId}`, JSON.stringify(flashcards));
+      try {
+        const docRef = doc(db, 'decks', deckId);
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          const data = docSnapshot.data() as Deck;
+          setDeckName(data.name || `Deck ${deckId}`);
+          setFlashcards(data.cards || []);
+        } else {
+          console.error('Deck not found');
+        }
+      } catch (error) {
+        console.error('Error loading deck data:', error);
+      }
+    };
+
+    loadDeckData();
+  }, [deckId, currentUser]);
+
+  const saveDeckData = async (updatedDeckName: string, updatedFlashcards:Flashcard[]) => {
+    if (!deckId || !currentUser) return;
+  
+    try {
+      const docRef = doc(db, 'decks', deckId);
+      await setDoc(docRef, {
+        name: updatedDeckName, 
+        cards: updatedFlashcards,
+        userId: currentUser.uid,
+      });
+      console.log('Deck saved successfully');
+    } catch (error) {
+      console.error('Error saving deck data:', error);
+    }
   };
 
-  // Update deck name
-  const handleEditDeckName = () => {
+  const handleEditCard = (id: number, side: 'front' | 'back', newContent: string) => {
+    const updatedFlashcards = flashcards.map((card) =>
+      card.id === id
+        ? { ...card, [side === 'front' ? 'frontContent' : 'backContent']: newContent }
+        : card
+    );
+    setFlashcards(updatedFlashcards);
+  
+    saveDeckData(deckName, updatedFlashcards);
+  };
+
+  const handleEditDeckName = async () => {
     const newDeckName = prompt('Enter new deck name:', deckName);
     if (newDeckName) {
       setDeckName(newDeckName);
-      saveDeckData();
+      await saveDeckData(newDeckName, flashcards);
     }
   };
 
-  // Handle changes in flashcards (front and back content)
-  const handleEditCard = (id: number, side: 'front' | 'back', newContent: string) => {
-    const updatedFlashcards = flashcards.map((card) =>
-      card.id === id ? { ...card, [side === 'front' ? 'frontContent' : 'backContent']: newContent } : card
-    );
-    setFlashcards(updatedFlashcards);
-    saveDeckData(); // Save changes to localStorage
-  };
 
-  // Handle deleting a flashcard
   const handleDeleteCard = (id: number) => {
     const updatedFlashcards = flashcards.filter((card) => card.id !== id);
     setFlashcards(updatedFlashcards);
-    saveDeckData();
+    saveDeckData(deckName, updatedFlashcards);
   };
 
-  // Handle deck deletion
-  const handleDeleteDeck = () => {
+  const handleDeleteDeck = async () => {
+    if (!deckId || !currentUser) return;
+
     if (window.confirm(`Are you sure you want to delete ${deckName}?`)) {
-      localStorage.removeItem(`deckName-${deckId}`);
-      localStorage.removeItem(`flashcards-${deckId}`);
-      navigate('/decks'); // Redirect back to the decks list after deletion
+      try {
+        await deleteDoc(doc(db, 'decks', deckId));
+        navigate('/decks');
+      } catch (error) {
+        console.error('Error deleting deck:', error);
+      }
     }
   };
 
