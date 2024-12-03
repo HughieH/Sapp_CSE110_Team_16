@@ -9,6 +9,7 @@ interface Flashcard {
   id: number;
   frontContent: string;
   backContent: string;
+  numCorrect: number;
 }
 
 interface Deck {
@@ -160,7 +161,7 @@ const EditDeck: React.FC = () => {
           </div>
         ))}
 
-        <div className="flashcard create-new-card" onClick={() => setFlashcards([...flashcards, { id: flashcards.length + 1, frontContent: '', backContent: '' }])}>
+        <div className="flashcard create-new-card" onClick={() => setFlashcards([...flashcards, { id: flashcards.length + 1, frontContent: '', backContent: '', numCorrect: 0 }])}>
           <div className="create-icon-circle">+</div>
           <div className="create-new-text">Create New</div>
         </div>

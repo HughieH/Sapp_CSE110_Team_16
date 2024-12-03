@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import './StudyDeck.css';
 
@@ -8,6 +8,7 @@ type Flashcard = {
   id: string;
   frontContent: string;
   backContent: string;
+  numCorrect: number;
 };
 
 type Deck = {
@@ -47,6 +48,24 @@ const StudyDeck: React.FC = () => {
   const currentCard = deck?.cards[currentCardIndex];
 
   const toggleFlip = () => setIsFlipped((prevState) => !prevState);
+
+  const correctAnswer = async (cardId: number) => {
+    const deckRef = doc(db, "decks", deckId as string);
+    const deckSnap = await getDoc(deckRef);
+
+    // Cast the document data to Deck type
+    const deckData = deckSnap.data() as Deck;
+    const cards = deckData.cards;
+
+    // Update numCorrect for the specific card
+    const updatedCards = cards.map((card) =>
+      Number(card.id) === cardId
+        ? { ...card, numCorrect: (card.numCorrect || 0) + 1 }
+        : card
+    );
+    await updateDoc(deckRef, { cards: updatedCards });
+    nextCard();
+  };
 
   const nextCard = () => {
     if (currentCardIndex < (deck?.cards.length || 0) - 1) {
@@ -91,7 +110,7 @@ const StudyDeck: React.FC = () => {
         <button className="study-button wrong-button" onClick={nextCard} data-testid="wrong button">
           Wrong
         </button>
-        <button className="study-button correct-button" onClick={nextCard} data-testid="correct button">
+        <button className="study-button correct-button" onClick={() => correctAnswer(currentCardIndex)} data-testid="correct button">
           Correct
         </button>
         <button className="study-button ignore-button" onClick={nextCard} data-testid="ignore button">

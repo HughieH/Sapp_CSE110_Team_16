@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, where, doc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import { useAuth } from '../context/AuthContext';
 import './FlashcardDecks.css';
@@ -48,6 +48,10 @@ const FlashcardDecks: React.FC = () => {
     fetchDecks();
   }, [currentUser, location]); 
   const handleStudyDeck = (deckId: string) => {
+    const deckref = doc(db, "decks", deckId);
+    updateDoc(deckref, {
+      timesStudied: increment(1),
+    });
     navigate(`/study/${deckId}`);
   };
 
@@ -61,6 +65,7 @@ const FlashcardDecks: React.FC = () => {
       name: `Deck ${decks?.length ? decks.length + 1 : 1}`,
       cards: [],
       userId: currentUser.uid,
+      timesStudied: 0
     };
 
     try {
