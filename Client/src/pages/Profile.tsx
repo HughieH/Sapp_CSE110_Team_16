@@ -10,6 +10,8 @@ const Profile: React.FC = () => {
   const { currentUser } = useAuth();
   const [totalStudyTime, setTotalStudyTime] = useState<number>(0); 
 
+  console.log(currentUser)
+
   useEffect(() => {
     const fetchTotalStudyTime = async () => {
       if (!currentUser) return;

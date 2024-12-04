@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAuth } from "./context/AuthContext";
 
 import App from './App'
 import Toolbar from './components/Toolbar'
@@ -6,6 +7,7 @@ import Navbar from './components/Navbar'
 
 const PageContainer = () => {
     const [message, setMessage] = useState(true);
+    const { currentUser } = useAuth();
 
     // Function to be called from the child component
     const handleButtonClick = () => {
