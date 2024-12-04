@@ -20,7 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/timers" element={<Timer />} />
         <Route path="/profile" element={<Profile />} />
-
+        <Route path="/recommend" element={<Recommend />} />
         <Route path="/decks" element={<FlashcardDecks />} />
         <Route path="/edit/:deckId" element={<EditDeck />} />
         <Route path="/study/:deckId" element={<StudyDeck />} />
