@@ -48,7 +48,7 @@ const Login = () => {
  };
 
  return (
-   <div data-testid="Login" className="grow flex flex-col items-center justify-center min-h-screen">
+   <div data-testid="Login" className="mr-20 grow flex flex-col justify-center h-[calc(100vh-88px)]">
 
             <div className="right-panel">
                 <div className="login-content">
@@ -98,10 +98,10 @@ const Login = () => {
               Log In with Google
             </button>
                         
-                        <Link to="/Register" className="create-account-link">
+                        <Link to="/register" className="create-account-link">
                             Create Account
                         </Link>
-                        <Link to="/Register" className="create-account-link">
+                        <Link to="/register" className="create-account-link">
                             Forgot Password?
                         </Link>
                     </div>

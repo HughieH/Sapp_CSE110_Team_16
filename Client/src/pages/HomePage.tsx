@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const HomePage = () => {
   return (
     <>
-    <div data-testid="Home" className="grow flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center">
+    <div data-testid="Home" className="grow flex flex-col items-center justify-center h-[calc(100vh-88px)] bg-white text-center">
       <div className="flex items-center mb-2">
         <h1 className="text-8xl font-bold text-green-600 mr-2">SAPP</h1>
         <img src={BookIcon} alt="Book Icon" className="w-16 h-16" />

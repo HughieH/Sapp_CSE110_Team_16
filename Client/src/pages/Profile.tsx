@@ -51,8 +51,8 @@ const Profile: React.FC = () => {
           <h1>{currentUser ? currentUser.displayName || currentUser.email : 'Log In'}</h1>
         </div>
       </div>
-      <div className="px-5 w-5/6">
-        <h1 data-testid="ProfileStatistics" className="text-5xl font-bold text-sapp-leaf pl-2 pb-5">
+      <div className="w-1/2 px-5 lg:px-16">
+        <h1 data-testid="ProfileStatistics" className="text-5xl font-bold text-sapp-leaf pl-2 pb-5 ">
           Statistics
         </h1>
         <div data-testid="ProfileStats" className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-16 h-50 rounded-3xl gap-5 lg:gap-5">

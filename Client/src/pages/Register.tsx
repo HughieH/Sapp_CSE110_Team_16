@@ -65,7 +65,7 @@ const Register = () => {
   };
 
   return (
-    <div data-testid="Register" className="grow flex flex-col items-center justify-center min-h-screen">
+    <div data-testid="Register" className="grow flex flex-col justify-center h-[calc(100vh-88px)] mr-20">
       <div className="right-panel">
         <div className="login-content">
           <div className="login-container">
@@ -104,7 +104,7 @@ const Register = () => {
             {/* Link to login page */}
             <div style={{ textAlign: 'center', fontSize: '22px', color: 'white' }}>
               Already signed up? Go to&nbsp;
-              <Link to="/Login" style={{ color: 'white', textDecoration: 'underline' }}>
+              <Link to="/login" style={{ color: 'white', textDecoration: 'underline' }}>
                 Login
               </Link>
             </div>

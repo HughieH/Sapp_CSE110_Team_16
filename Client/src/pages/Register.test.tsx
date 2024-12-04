@@ -1,15 +1,15 @@
 // src/pages/Register.test.tsx
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import Register from './Register';
 
 describe('Register Component', () => {
     it('renders registration form', () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Register />
-            </BrowserRouter>
+            </MemoryRouter>
         );
 
         // Check for "Create Account" header text

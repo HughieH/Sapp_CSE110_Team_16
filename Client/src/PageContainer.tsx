@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import CollapseIcon from '../assets/icons/navbar collapser.png'
+import { useState } from 'react';
 
 import App from './App'
 import Toolbar from './components/Toolbar'
@@ -16,14 +15,26 @@ const PageContainer = () => {
     };
   
     return (
-    <>
+      <div className="grid grid-cols-[auto_1fr] h-screen">
         {message && (<Navbar />)}
-        <div className="grow">
-            <Toolbar onButtonClick={handleButtonClick}/>
-            <App />        
+        <div className="grid grid-rows-[auto_1fr] w-screen overflow-y-auto">
+          <Toolbar onButtonClick={handleButtonClick}/>
+          <div className={message == false ? "overflow-y-auto" : 'overflow-y-auto mr-20'}>
+            <App/>
+          </div>
         </div>
-    </>
+      </div>
   );
 };
 
 export default PageContainer;
+
+/*
+      <div className="grid grid-cols-[auto_1fr] h-screen">
+      {message && (<Navbar />)}
+        <div className="grid grid-rows-[auto_1fr]">
+          <Toolbar onButtonClick={handleButtonClick}/>
+          <App />        
+        </div>
+      </div>
+*/
