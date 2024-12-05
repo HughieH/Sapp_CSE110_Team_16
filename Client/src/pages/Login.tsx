@@ -1,53 +1,48 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import {auth} from '../firebaseConfig'
-import logo from '../assets/logo.png';
+import { auth } from '../firebaseConfig';
 import image from '../assets/image.png';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 
 const Login = () => {
- const [email, setEmail] = useState<string>('');
- const [password, setPassword] = useState<string>('');
- const [error, setError] = useState<string|null>('');
- const provider = new GoogleAuthProvider();
- const navigate = useNavigate();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>('');
+  const navigate = useNavigate();
 
+  const handleEmailSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('User signed in successfully with email and password');
+      navigate('/'); // Redirect to decks page
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error('Error during email sign-in:', err.message);
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    }
+  };
+ 
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+      console.log('User signed in successfully with Google');
+      navigate('/');
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error('Error during Google sign-in:', err.message);
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    }
+  };
 
- const handleEmailSignIn = async (e: React.FormEvent) => {
-   e.preventDefault();
-   try {
-     await signInWithEmailAndPassword(auth, email, password);
-     console.log("User signed in successfully with email and password");
-     navigate('/'); // Redirect to home page
-
-   } catch (err) {
-     if (err instanceof Error) {
-       console.error("Error during email sign-in:", err.message);
-       setError(err.message);
-     } else {
-       setError("An unexpected error occurred.");
-     }
-   }
- };
-
- const handleGoogleSignIn = async () => {
-   const provider = new GoogleAuthProvider();
-   try {
-     await signInWithPopup(auth, provider);
-     console.log("User signed in successfully with Google");
-     navigate('/decks')
-   } catch (err) {
-     if (err instanceof Error) {
-       console.error("Error during Google sign-in:", err.message);
-       setError(err.message);
-     } else {
-       setError("An unexpected error occurred.");
-     }
-   }
- };
-
- return (
+  return (
    <div data-testid="Login" className="grow flex flex-col justify-center h-screen">
             <div className="right-panel pl-52">
                 <div className="login-content">
@@ -55,9 +50,7 @@ const Login = () => {
                         <h1>Log in</h1>
                         <form onSubmit={handleEmailSignIn}>
               <div className="mb-4">
-                <label htmlFor="email" className="block mb-1">
-                  Email
-                </label>
+                <label htmlFor="email" className="block mb-1"></label>
                 <input
                   id="email"
                   type="email"
@@ -69,9 +62,7 @@ const Login = () => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="password" className="block mb-1">
-                  Password
-                </label>
+                <label htmlFor="password" className="block mb-1"></label>
                 <input
                   id="password"
                   type="password"
@@ -84,7 +75,7 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                data-testid="email-login-button"
               >
                 Log In
               </button>
@@ -92,11 +83,10 @@ const Login = () => {
             <button
               type="button"
               onClick={handleGoogleSignIn}
-              className="mt-4 w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+              data-testid="google-login-button"
             >
               Log In with Google
-            </button>
-                        
+            </button>                        
                         <Link to="/register" className="create-account-link">
                             Create Account
                         </Link>
@@ -108,8 +98,9 @@ const Login = () => {
                 </div>
             </div>
         </div>
- );
+      </div>
+    </div>
+  );
 };
-
 
 export default Login;

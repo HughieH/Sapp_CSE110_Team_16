@@ -15,6 +15,7 @@ import FlashcardDecks from './pages/FlashcardDecks';
 import EditDeck from './pages/EditDeck';
 import StudyDeck from './pages/StudyDeck';
 import { AuthProvider } from './context/AuthContext';
+import Recommend from './pages/Recommend';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -37,6 +38,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/timers" element={<Timer />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/recommend" element={<Recommend />} />
         <Route path="/decks" element={<FlashcardDecks />} />
         <Route path="/edit/:deckId" element={<EditDeck />} />
         <Route path="/study/:deckId" element={<StudyDeck />} />
