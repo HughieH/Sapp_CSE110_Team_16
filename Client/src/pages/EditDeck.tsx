@@ -95,8 +95,8 @@ const EditDeck: React.FC = () => {
 
     if (window.confirm(`Are you sure you want to delete ${deckName}?`)) {
       try {
-        await deleteDoc(doc(db, 'decks', deckId));
         navigate('/decks');
+        await deleteDoc(doc(db, 'decks', deckId));
       } catch (error) {
         console.error('Error deleting deck:', error);
       }
@@ -104,7 +104,7 @@ const EditDeck: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen p-10">
+    <div className="p-10 bg-white h-[calc(100vh-88px)]">
       <div className="header">
         <h1 className="deck-title">{deckName}</h1>
         <button className="edit-icon-button" onClick={handleEditDeckName} data-testid="rename deck">

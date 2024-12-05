@@ -65,8 +65,8 @@ const Register = () => {
   };
 
   return (
-    <div data-testid="Register" className="grow flex flex-col items-center justify-center min-h-screen">
-      <div className="right-panel">
+    <div data-testid="Register" className="grow flex flex-col justify-center h-screen">
+      <div className="right-panel pl-52">
         <div className="login-content">
           <div className="login-container">
             <h1>Create Account</h1>
@@ -104,12 +104,12 @@ const Register = () => {
             {/* Link to login page */}
             <div style={{ textAlign: 'center', fontSize: '22px', color: 'white' }}>
               Already signed up? Go to&nbsp;
-              <Link to="/Login" style={{ color: 'white', textDecoration: 'underline' }}>
+              <Link to="/login" style={{ color: 'white', textDecoration: 'underline' }}>
                 Login
               </Link>
             </div>
           </div>
-          <img src={register} alt="Additional" className="additional-image" />
+          <img src={register} alt="Additional" className="additional-image pt-16" />
         </div>
       </div>
     </div>

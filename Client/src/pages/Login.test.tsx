@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import Login from './Login';
 
 describe('Login Component', () => {
     it('renders login form', () => {
         render(
-            <BrowserRouter>
+            <MemoryRouter>
                 <Login />
-            </BrowserRouter>
+            </MemoryRouter>
         );
 
         expect(screen.getByRole('heading', { name: /Log in/i })).toBeInTheDocument();

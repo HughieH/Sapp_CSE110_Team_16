@@ -16,7 +16,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log('User signed in successfully with email and password');
-      navigate('/decks'); // Redirect to decks page
+      navigate('/'); // Redirect to decks page
     } catch (err) {
       if (err instanceof Error) {
         console.error('Error during email sign-in:', err.message);
@@ -26,12 +26,12 @@ const Login = () => {
       }
     }
   };
-
+ 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
       console.log('User signed in successfully with Google');
-      navigate('/decks');
+      navigate('/');
     } catch (err) {
       if (err instanceof Error) {
         console.error('Error during Google sign-in:', err.message);
@@ -43,12 +43,12 @@ const Login = () => {
   };
 
   return (
-    <div data-testid="Login" className="grow flex flex-col items-center justify-center min-h-screen">
-      <div className="right-panel">
-        <div className="login-content">
-          <div className="login-container">
-            <h1>Log in</h1>
-            <form onSubmit={handleEmailSignIn}>
+   <div data-testid="Login" className="grow flex flex-col justify-center h-screen">
+            <div className="right-panel pl-52">
+                <div className="login-content">
+                    <div className="login-container">
+                        <h1>Log in</h1>
+                        <form onSubmit={handleEmailSignIn}>
               <div className="mb-4">
                 <label htmlFor="email" className="block mb-1"></label>
                 <input
@@ -86,11 +86,17 @@ const Login = () => {
               data-testid="google-login-button"
             >
               Log In with Google
-            </button>
-            <Link to="/Register" className="create-account-link">Create Account</Link>
-            <Link to="/Register" className="create-account-link">Forgot Password?</Link>
-          </div>
-          <img src={image} alt="Additional" className="additional-image" />
+            </button>                        
+                        <Link to="/register" className="create-account-link">
+                            Create Account
+                        </Link>
+                        <Link to="/register" className="create-account-link">
+                            Forgot Password?
+                        </Link>
+                    </div>
+                    <img src={image} alt="Additional" className="additional-image" />
+                </div>
+            </div>
         </div>
       </div>
     </div>

@@ -10,25 +10,26 @@ const Profile: React.FC = () => {
   const { currentUser } = useAuth();
   const [totalStudyTime, setTotalStudyTime] = useState<number>(0); 
 
-  useEffect(() => {
-    const fetchTotalStudyTime = async () => {
-      if (!currentUser) return;
+  const fetchUserStats = async () => {
+    if (!currentUser) return;
 
-      try {
-        const userRef = doc(db, 'users', currentUser.uid);
-        const userSnapshot = await getDoc(userRef);
+    try {
+      const userRef = doc(db, "users", currentUser.uid);
+      const userDoc = await getDoc(userRef);
 
-        if (userSnapshot.exists()) {
-          const data = userSnapshot.data();
-          setTotalStudyTime(data.totalStudyTime || 0); 
-        }
-      } catch (error) {
-        console.error('Error fetching total study time:', error);
+      if (userDoc.exists()) {
+        console.log("Successfully retrieved user data.");
+        setTotalStudyTime(userDoc.data().totalStudyTime);
       }
-    };
+      else {
+        console.log("UserDoc not found.");
+      }
+    } catch (error) {
+      console.error("Error getting user data from Firestore:", error);
+    }  
+  };
 
-    fetchTotalStudyTime();
-  }, [currentUser]);
+  fetchUserStats()
 
   
   const formatTime = (milliseconds: number): string => {
@@ -37,7 +38,7 @@ const Profile: React.FC = () => {
     const minutes = Math.floor((totalSeconds % 3600) / 60); 
     const seconds = totalSeconds % 60; 
 
-    let timeString = `${hours}:${minutes}:${seconds}`;
+    let timeString = `${hours}:${(minutes < 10) ? `0${minutes}` : `${minutes}`}:${(seconds < 10) ? `0${seconds}` : `${seconds}`}`;
 
 
     return timeString
@@ -51,8 +52,8 @@ const Profile: React.FC = () => {
           <h1>{currentUser ? currentUser.displayName || currentUser.email : 'Log In'}</h1>
         </div>
       </div>
-      <div className="px-5 w-5/6">
-        <h1 data-testid="ProfileStatistics" className="text-5xl font-bold text-sapp-leaf pl-2 pb-5">
+      <div className="w-1/2 px-5 lg:px-16">
+        <h1 data-testid="ProfileStatistics" className="text-5xl font-bold text-sapp-leaf pl-2 pb-5 ">
           Statistics
         </h1>
         <div data-testid="ProfileStats" className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-16 h-50 rounded-3xl gap-5 lg:gap-5">

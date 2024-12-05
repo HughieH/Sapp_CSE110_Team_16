@@ -1,18 +1,18 @@
 import React from 'react';
 
 import { render, screen, fireEvent } from '@testing-library/react';
-import PageContainer from '../PageContainer';
-import { BrowserRouter } from 'react-router-dom';
+import PageContainer from './PageContainer';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('NavBar Component', () => {
     test('Navbar collapsability functions properly', () => {
-        render(<BrowserRouter>
+        render(<MemoryRouter>
                     <React.StrictMode>
                         <div className="flex">
                             <PageContainer/>
                         </div>
                     </React.StrictMode>
-                </BrowserRouter>);
+                </MemoryRouter>);
 
         var navbarElement = screen.getByTestId("Navbar");
         expect(navbarElement).toBeInTheDocument();
@@ -34,13 +34,13 @@ describe('NavBar Component', () => {
     });
 
     test('Navbar navigation functions properly', () => {
-        render(<BrowserRouter>
+        render(<MemoryRouter>
                     <React.StrictMode>
                         <div className="flex">
                             <PageContainer/>
                         </div>
                     </React.StrictMode>
-                </BrowserRouter>);
+                </MemoryRouter>);
 
         const homeIconElement = screen.getByTestId("HomeIcon")
         const decksIconElement = screen.getByTestId("DecksIcon")
