@@ -95,8 +95,8 @@ const EditDeck: React.FC = () => {
 
     if (window.confirm(`Are you sure you want to delete ${deckName}?`)) {
       try {
-        navigate('/decks');
         await deleteDoc(doc(db, 'decks', deckId));
+        navigate('/decks');
       } catch (error) {
         console.error('Error deleting deck:', error);
       }
@@ -104,6 +104,7 @@ const EditDeck: React.FC = () => {
   };
 
   return (
+
     <div className="p-10 bg-white h-[calc(100vh-88px)]">
       <div className="header">
         <h1 className="deck-title">{deckName}</h1>
@@ -123,51 +124,38 @@ const EditDeck: React.FC = () => {
         {flashcards.map((card) => (
           <div key={card.id} className="flashcard">
             <div className="flashcard-content">
-              <div>
-                <label>Front:</label>
-                <input
-                  type="text"
+              <label>
+                Front:
+                <textarea
                   value={card.frontContent}
                   onChange={(e) => handleEditCard(card.id, 'front', e.target.value)}
-                  data-testid="front-text"
                   placeholder="Enter front content"
+                  data-testid="front-text"
                 />
-              </div>
-              <div>
-                <label>Back:</label>
-                <input
-                  type="text"
+              </label>
+              <label>
+                Back:
+                <textarea
                   value={card.backContent}
                   onChange={(e) => handleEditCard(card.id, 'back', e.target.value)}
-                  data-testid="back-text"
                   placeholder="Enter back content"
+                  data-testid="back-text"
                 />
-              </div>
+              </label>
             </div>
             <div className="flashcard-actions">
-              <button
-                className="edit-icon"
-                onClick={() => handleEditCard(card.id, 'front', card.frontContent)}
-              >
-                ✏️
-              </button>
-              <button
-                className="delete-icon"
-                onClick={() => handleDeleteCard(card.id)}
-              >
-                🗑️
-              </button>
+              <button onClick={() => handleEditCard(card.id, 'front', card.frontContent)}>✏️ Edit</button>
+              <button onClick={() => handleDeleteCard(card.id)}>🗑️ Delete</button>
             </div>
           </div>
         ))}
-
         <div className="flashcard create-new-card" onClick={() => setFlashcards([...flashcards, { id: flashcards.length + 1, frontContent: '', backContent: '', numCorrect: 0 }])}>
           <div className="create-icon-circle">+</div>
           <div className="create-new-text">Create New</div>
         </div>
-      </div>
+      </main>
     </div>
-  );
-};
+   );
+  };  
 
 export default EditDeck;

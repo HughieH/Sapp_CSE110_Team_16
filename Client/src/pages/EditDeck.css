@@ -96,3 +96,123 @@
     font-weight: bold;
     color: #4D4D4D;
 }
+
+/* General Layout */
+.edit-deck-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .deck-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #2E7D32;
+    padding-bottom: 10px;
+  }
+  
+  .deck-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .deck-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #2E7D32;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .icon-button.delete {
+    color: #C62828;
+  }
+  
+  .icon-button:hover {
+    color: #1A5E20;
+  }
+  
+  .back-button {
+    color: #2E7D32;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  /* Flashcards */
+  .flashcards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .flashcard {
+    background-color: #E0F2E9;
+    border: 2px solid #2E7D32;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  
+  .flashcard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .flashcard-content {
+    flex-grow: 1;
+  }
+  
+  .flashcard-content label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #4D4D4D;
+  }
+  
+  .flashcard-content textarea {
+    resize: none;
+    padding: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+  }
+  
+  .flashcard-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .new-flashcard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0FFF4;
+    border: 2px dashed #2E7D32;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .new-flashcard:hover {
+    background-color: #E0F2E9;
+  }
+  
+  .add-icon {
+    font-size: 2rem;
+    color: #2E7D32;
+  }
+  

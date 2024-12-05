@@ -1,158 +1,483 @@
 .study-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    padding: 20px;
-    text-align: center;
-    background-color: #F9FBE7; /* Soft background color for the container */
-  }
-  
-  .deck-title {
-    font-size: 1.5rem;
-    color: #2E7D32;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .flashcard {
-    width: 200px;
-    height: 150px;
-    border-radius: 12px;
-    background-color: #E0F2E9;
-    border: 3px solid #66BB6A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    perspective: 1000px; /* Enables 3D effect for flip */
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
-  }
-  
-  .flashcard-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d; /* Ensures the child elements can rotate */
-  }
-  
-  .flashcard.flipped .flashcard-inner {
-    transform: rotateY(180deg); /* Rotate the card 180 degrees when flipped */
-  }
-  
-  .flashcard-front,
-  .flashcard-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #2E7D32;
-    backface-visibility: hidden; /* Hides the back side when flipped */
-  }
-  
-  .flashcard-back {
-    transform: rotateY(180deg); /* Back side is rotated 180 degrees */
-  }
-  
-  /* Flip Card Button */
-  .flip-button {
-    background-color: #66BB6A;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s;
-  }
-  
-  .flip-button:hover {
-    background-color: #2E7D32;
-  }
-  
-  /* Stats & Message */
-  .stats {
-    font-size: 1.1rem;
-    margin-top: 10px;
-    color: #388E3C;
-  }
-  
-  .deck-completed-message {
-    font-size: 1.2rem;
-    color: #D32F2F;
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  /* Other Button Styles */
-  .button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    justify-content: center;
-  }
-  
-  .study-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out; /* Smooth transition */
-  }
-  
-  .wrong-button {
-    background-color: #FFB74D; /* Light Orange */
-  }
-  
-  .correct-button {
-    background-color: #66BB6A; /* Green */
-  }
-  
-  .ignore-button {
-    background-color: #EF5350; /* Red */
-  }
-  
-  .study-button:hover {
-    background-color: #4CAF50; /* Change on hover for all buttons */
-  }
-  
-  .wrong-button:hover {
-    background-color: #FF9800; /* Darker orange */
-  }
-  
-  .correct-button:hover {
-    background-color: #43A047; /* Darker green */
-  }
-  
-  .ignore-button:hover {
-    background-color: #D32F2F; /* Darker red */
-  }
-  
-  .navigation-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .go-back-link {
-    margin-top: 20px;
-    color: #2E7D32;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .go-back-link:hover {
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9fbe7; /* Soft background color */
+}
+
+.deck-title {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.flashcard {
+  width: 200px;
+  height: 150px;
+  perspective: 1000px; /* Enables 3D effect */
+  margin-bottom: 20px;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: transform 0.6s; /* Smooth animation */
+}
+
+.flashcard-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.flashcard-front {
+  background-color: #4caf50; /* Green for front */
+}
+
+.flashcard-back {
+  background-color: #f44336; /* Red for back */
+  transform: rotateY(180deg);
+}
+
+.counter-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.counter {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.study-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.wrong-button {
+  background-color: #ffb74d;
+}
+
+.correct-button {
+  background-color: #66bb6a;
+}
+
+.ignore-button {
+  background-color: #ef5350;
+}
+
+.study-button:hover {
+  background-color: #4caf50;
+}
+
+.wrong-button:hover {
+  background-color: #ff9800;
+}
+
+.correct-button:hover {
+  background-color: #43a047;
+}
+
+.ignore-button:hover {
+  background-color: #d32f2f;
+}
+
+.go-back-link {
+  margin-top: 20px;
+  color: #2e7d32;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.go-back-link:hover {
+  text-decoration: underline;
+}
+
+.progress-bar {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #388e3c;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.shuffle-button,
+.review-button {
+  background-color: #42a5f5;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.shuffle-button:hover {
+  background-color: #1e88e5;
+}
+
+.review-button {
+  background-color: #ff7043;
+}
+
+.review-button:hover {
+  background-color: #e64a19;
+}
+
+.progress {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #388e3c;
+  font-weight: bold;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.shuffle-button,
+.review-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  background-color: #42a5f5;
+  transition: background-color 0.3s;
+}
+
+.shuffle-button:hover {
+  background-color: #1e88e5;
+}
+
+.review-button {
+  background-color: #ef5350;
+}
+
+.review-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Styling for the container and deck title */
+.study-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9fbe7;
+}
+
+.deck-title {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Flashcard Styling */
+.flashcard {
+  width: 200px;
+  height: 150px;
+  border-radius: 12px;
+  background-color: #e0f2e9;
+  border: 3px solid #66bb6a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  perspective: 1000px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #2e7d32;
+  backface-visibility: hidden;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+}
+
+/* Buttons */
+.study-button, .action-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin: 10px;
+}
+
+.study-button.wrong-button {
+  background-color: #ffb74d;
+}
+
+.study-button.correct-button {
+  background-color: #66bb6a;
+}
+
+.study-button.ignore-button {
+  background-color: #ef5350;
+}
+
+.study-button:hover {
+  background-color: #4caf50;
+}
+
+.action-button.shuffle-button {
+  background-color: #0277bd;
+}
+
+.action-button.review-button {
+  background-color: #ab47bc;
+}
+
+.action-button.restudy-button {
+  background-color: #ff7043;
+}
+
+.action-button.exit-button {
+  background-color: #388e3c;
+}
+
+.action-button:hover {
+  opacity: 0.9;
+}
+
+.deck-completed {
+  margin-top: 50px;
+}
+
+.deck-completed-message {
+  font-size: 2rem;
+  color: #388e3c;
+  font-weight: bold;
+}
+
+.completion-actions {
+  margin-top: 20px;
+}
+
+.completion-actions .action-button {
+  margin: 10px;
+}
+
+/* Progress Tracker and Counter */
+.progress, .counter-container {
+  margin: 10px;
+}
+
+.counter-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.counter {
+  font-size: 1.1rem;
+  color: #388e3c;
+}
+
+.go-back-link {
+  margin-top: 30px;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #388e3c;
+}
+
+.study-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f9fbe7;
+}
+
+/* Sidebar for statistics */
+.statistics-sidebar {
+  flex: 1;
+  background-color: #e8f5e9;
+  border-right: 2px solid #388e3c;
+  padding: 20px;
+  text-align: left;
+  font-size: 1rem;
+  color: #2e7d32;
+}
+
+.statistics-sidebar h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.completion-percentage {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #388e3c;
+}
+
+/* Main study area */
+.study-main {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.flashcard {
+  width: 300px;
+  height: 200px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #a5d6a7, #81c784);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  margin: 20px 0;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s, background 0.5s;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  backface-visibility: hidden;
+}
+
+.flashcard-front {
+  background: linear-gradient(135deg, #66bb6a, #388e3c);
+  color: white;
+}
+
+.flashcard-back {
+  background: linear-gradient(135deg, #ef5350, #d32f2f);
+  color: white;
+  transform: rotateY(180deg);
+}
+.study-container {
+  display: flex;
+  height: 100vh;
+}
+
+.stats-sidebar {
+  width: 200px;
+  background-color: #e8f5e9;
+  padding: 20px;
+  text-align: left;
+  border-right: 2px solid #c8e6c9;
+}
+
+.stats-sidebar h2 {
+  font-size: 1.5rem;
+  color: #388e3c;
+  margin-bottom: 10px;
+}
+
+.stats-sidebar p {
+  font-size: 1rem;
+  color: #2e7d32;
+  margin: 5px 0;
+}
+
+.study-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}

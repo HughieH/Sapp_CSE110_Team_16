@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -73,9 +74,32 @@ const StudyDeck: React.FC = () => {
       setIsFlipped(false);
     } else {
       navigate('/decks');
+      
+  const shuffleDeck = () => {
+    const shuffled = [...deckCards];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
+    setDeckCards(shuffled);
+    setCurrentCardIndex(0);
+    setIsFlipped(false);
+    setDeckCompleted(false);
+    setStats({ wrong: 0, correct: 0, ignore: 0 });
+    setIncorrectCards([]);
   };
 
+   const reviewIncorrect = () => {
+    if (incorrectCards.length > 0) {
+      setDeckCards(incorrectCards);
+      setCurrentCardIndex(0);
+      setIsFlipped(false);
+      setDeckCompleted(false);
+      setStats({ wrong: 0, correct: 0, ignore: 0 });
+      setIncorrectCards([]);
+    }
+  };      
+  
   const previousCard = () => {
     if (currentCardIndex > 0) {
       setCurrentCardIndex((prevIndex) => prevIndex - 1);
@@ -86,10 +110,24 @@ const StudyDeck: React.FC = () => {
   if (!deck) {
     return <p>Loading...</p>;
   }
+        
+    const successPercentage = (stats.correct / deckCards.length) * 100;
 
   return (
     <div className="study-container">
-      <h1 className="deck-title">{deck.name}</h1>
+      <aside className="stats-sidebar">
+        <h2>Statistics</h2>
+        <p>
+          <CheckCircle /> Correct: {stats.correct}
+        </p>
+        <p>
+          <Close /> Wrong: {stats.wrong}
+        </p>
+        <p>
+          <NotInterested /> Ignored: {stats.ignore}
+        </p>
+        <p>Card: {currentCardIndex + 1} / {deckCards.length}</p>
+      </aside>
 
       {currentCard ? (
         <div className="flashcard" onClick={toggleFlip}>
