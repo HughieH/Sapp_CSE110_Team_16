@@ -48,13 +48,13 @@ const EditDeck: React.FC = () => {
     loadDeckData();
   }, [deckId, currentUser]);
 
-  const saveDeckData = async (updatedDeckName: string, updatedFlashcards:Flashcard[]) => {
+  const saveDeckData = async (updatedDeckName: string, updatedFlashcards: Flashcard[]) => {
     if (!deckId || !currentUser) return;
-  
+
     try {
       const docRef = doc(db, 'decks', deckId);
       await setDoc(docRef, {
-        name: updatedDeckName, 
+        name: updatedDeckName,
         cards: updatedFlashcards,
         userId: currentUser.uid,
       });
@@ -64,15 +64,14 @@ const EditDeck: React.FC = () => {
     }
   };
 
-  const handleEditCard = (id: number, side: 'front' | 'back', newContent: string) => {
+  const handleEditCard = async (id: number, side: 'front' | 'back', newContent: string) => {
     const updatedFlashcards = flashcards.map((card) =>
       card.id === id
         ? { ...card, [side === 'front' ? 'frontContent' : 'backContent']: newContent }
         : card
     );
     setFlashcards(updatedFlashcards);
-  
-    saveDeckData(deckName, updatedFlashcards);
+    await saveDeckData(deckName, updatedFlashcards);
   };
 
   const handleEditDeckName = async () => {
@@ -83,11 +82,10 @@ const EditDeck: React.FC = () => {
     }
   };
 
-
-  const handleDeleteCard = (id: number) => {
+  const handleDeleteCard = async (id: number) => {
     const updatedFlashcards = flashcards.filter((card) => card.id !== id);
     setFlashcards(updatedFlashcards);
-    saveDeckData(deckName, updatedFlashcards);
+    await saveDeckData(deckName, updatedFlashcards);
   };
 
   const handleDeleteDeck = async () => {
@@ -103,8 +101,19 @@ const EditDeck: React.FC = () => {
     }
   };
 
-  return (
+  const handleAddCard = async () => {
+    const newCard: Flashcard = {
+      id: Date.now(), // Unique timestamp-based ID
+      frontContent: '',
+      backContent: '',
+      numCorrect: 0,
+    };
+    const updatedFlashcards = [...flashcards, newCard];
+    setFlashcards(updatedFlashcards);
+    await saveDeckData(deckName, updatedFlashcards);
+  };
 
+  return (
     <div className="p-10 bg-white h-[calc(100vh-88px)]">
       <div className="header">
         <h1 className="deck-title">{deckName}</h1>
@@ -144,18 +153,17 @@ const EditDeck: React.FC = () => {
               </label>
             </div>
             <div className="flashcard-actions">
-              <button onClick={() => handleEditCard(card.id, 'front', card.frontContent)}>✏️ Edit</button>
               <button onClick={() => handleDeleteCard(card.id)}>🗑️ Delete</button>
             </div>
           </div>
         ))}
-        <div className="flashcard create-new-card" onClick={() => setFlashcards([...flashcards, { id: flashcards.length + 1, frontContent: '', backContent: '', numCorrect: 0 }])}>
+        <div className="flashcard create-new-card" onClick={handleAddCard}>
           <div className="create-icon-circle">+</div>
           <div className="create-new-text">Create New</div>
         </div>
-      </main>
+      </div>
     </div>
-   );
-  };  
+  );
+};
 
 export default EditDeck;

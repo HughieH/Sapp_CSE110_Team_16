@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
-import { CheckCircle, Close, NotInterested, Replay } from "@mui/icons-material";
 
 import './StudyDeck.css';
 
@@ -48,36 +46,35 @@ const StudyDeck: React.FC = () => {
     fetchDeck();
   }, [deckId]);
 
-  const currentCard = deck?.cards[currentCardIndex];
-
   const toggleFlip = () => setIsFlipped((prevState) => !prevState);
 
-  const correctAnswer = async (cardId: number) => {
-    const deckRef = doc(db, "decks", deckId as string);
-    const deckSnap = await getDoc(deckRef);
+  const correctAnswer = async (cardId: string) => {
+    if (!deck) return;
 
-    // Cast the document data to Deck type
-    const deckData = deckSnap.data() as Deck;
-    const cards = deckData.cards;
-
-    // Update numCorrect for the specific card
-    const updatedCards = cards.map((card) =>
-      Number(card.id) === cardId
-        ? { ...card, numCorrect: (card.numCorrect || 0) + 1 }
+    const updatedCards = deck.cards.map((card) =>
+      card.id === cardId
+        ? { ...card, numCorrect: card.numCorrect + 1 }
         : card
     );
-    await updateDoc(deckRef, { cards: updatedCards });
+
+    try {
+      await updateDoc(doc(db, 'decks', deckId as string), { cards: updatedCards });
+      setDeck({ ...deck, cards: updatedCards });
+    } catch (error) {
+      console.error('Error updating card:', error);
+    }
+
     nextCard();
   };
 
   const nextCard = () => {
-    if (currentCardIndex < (deck?.cards.length || 0) - 1) {
+    if (deck && currentCardIndex < deck.cards.length - 1) {
       setCurrentCardIndex((prevIndex) => prevIndex + 1);
       setIsFlipped(false);
     } else {
       navigate('/decks');
-  
-  }
+    }
+  };
 
   const previousCard = () => {
     if (currentCardIndex > 0) {
@@ -86,27 +83,14 @@ const StudyDeck: React.FC = () => {
     }
   };
 
-  if (!deck) {
+  if (!deck || !deck.cards.length) {
     return <p>Loading...</p>;
   }
-        
+
+  const currentCard = deck.cards[currentCardIndex];
 
   return (
     <div className="study-container">
-      <aside className="stats-sidebar">
-        <h2>Statistics</h2>
-        <p>
-          <CheckCircle /> Correct: {stats.correct}
-        </p>
-        <p>
-          <Close /> Wrong: {stats.wrong}
-        </p>
-        <p>
-          <NotInterested /> Ignored: {stats.ignore}
-        </p>
-        <p>Card: {currentCardIndex + 1} / {deckCards.length}</p>
-      </aside>
-
       {currentCard ? (
         <div className="flashcard" onClick={toggleFlip}>
           <div className={`flashcard-inner ${isFlipped ? 'flipped' : ''}`}>
@@ -122,26 +106,42 @@ const StudyDeck: React.FC = () => {
         <p>No cards available.</p>
       )}
 
-<div className="button-group">
-        <button className="study-button wrong-button" onClick={nextCard} data-testid="wrong button">
+      <div className="button-group">
+        <button
+          className="study-button wrong-button"
+          onClick={nextCard}
+          data-testid="wrong button"
+        >
           Wrong
         </button>
-        <button className="study-button correct-button" onClick={() => correctAnswer(currentCardIndex)} data-testid="correct button">
+        <button
+          className="study-button correct-button"
+          onClick={() => currentCard && correctAnswer(currentCard.id)}
+          data-testid="correct button"
+        >
           Correct
         </button>
-        <button className="study-button ignore-button" onClick={nextCard} data-testid="ignore button">
+        <button
+          className="study-button ignore-button"
+          onClick={nextCard}
+          data-testid="ignore button"
+        >
           Ignore
         </button>
       </div>
 
       <div className="navigation-buttons">
-        <button className="study-button" onClick={previousCard} disabled={currentCardIndex === 0}>
+        <button
+          className="study-button"
+          onClick={previousCard}
+          disabled={currentCardIndex === 0}
+        >
           Previous
         </button>
         <button
           className="study-button"
           onClick={nextCard}
-          disabled={currentCardIndex === (deck?.cards.length || 0) - 1 && !currentCard}
+          disabled={currentCardIndex === deck.cards.length - 1}
         >
           Next
         </button>
