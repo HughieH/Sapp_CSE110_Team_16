@@ -9,8 +9,7 @@
   margin-top: 0;
   font-family: 'Arial', sans-serif;
   background-color: #fff;
-  padding: 20px;
-  min-height: 100vh;
+  min-height: 90.5vh;
   box-shadow: none;
 }
 
@@ -39,7 +38,7 @@
 }
 
 .claw-machine {
-  margin: 40px auto;
+  margin: 20px auto;
   width: 500px;
   height: 600px;
   position: relative;
@@ -119,6 +118,18 @@
 
 .reset-button:hover {
   background-color: #218838;
+}
+
+.loading-button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: gray;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 @keyframes claw-drop {
