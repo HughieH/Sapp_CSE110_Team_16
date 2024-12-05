@@ -104,25 +104,23 @@ const EditDeck: React.FC = () => {
   };
 
   return (
-    <div className="edit-deck-container">
-      <header className="deck-header">
-        <div className="deck-header-left">
-          <h1>{deckName}</h1>
-          <button className="icon-button" onClick={handleEditDeckName} data-testid="rename deck" title="Rename Deck">
-            ✏️
-          </button>
-        </div>
-        <div className="deck-header-right">
-          <button className="icon-button delete" onClick={handleDeleteDeck} data-testid="delete deck" title="Delete Deck">
-            🗑️
-          </button>
-          <Link to="/decks" className="back-button" data-testid="back button">
-            Go Back
-          </Link>
-        </div>
-      </header>
-  
-      <main className="flashcards-container">
+
+    <div className="p-10 bg-white h-[calc(100vh-88px)]">
+      <div className="header">
+        <h1 className="deck-title">{deckName}</h1>
+        <button className="edit-icon-button" onClick={handleEditDeckName} data-testid="rename deck">
+          ✏️
+        </button>
+        <button className="delete-icon-button" onClick={handleDeleteDeck} data-testid="delete deck">
+          🗑️
+        </button>
+      </div>
+
+      <Link to="/decks" style={{ color: '#2E7D32', fontWeight: 'bold' }} data-testid="back button">
+        Go Back
+      </Link>
+
+      <div className="flashcard-edit-container">
         {flashcards.map((card) => (
           <div key={card.id} className="flashcard">
             <div className="flashcard-content">
@@ -151,9 +149,9 @@ const EditDeck: React.FC = () => {
             </div>
           </div>
         ))}
-        <div className="flashcard new-flashcard" onClick={() => setFlashcards([...flashcards, { id: flashcards.length + 1, frontContent: '', backContent: '', numCorrect: 0 }])}>
-          <div className="add-icon">+</div>
-          <span>Add New Card</span>
+        <div className="flashcard create-new-card" onClick={() => setFlashcards([...flashcards, { id: flashcards.length + 1, frontContent: '', backContent: '', numCorrect: 0 }])}>
+          <div className="create-icon-circle">+</div>
+          <div className="create-new-text">Create New</div>
         </div>
       </main>
     </div>

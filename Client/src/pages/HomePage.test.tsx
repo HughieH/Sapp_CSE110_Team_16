@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import HomePage from './HomePage';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 
 jest.mock('../assets/icons/SappLogo.png', () => 'SappLogo.png');
@@ -9,9 +9,9 @@ jest.mock('../assets/icons/book-icon-homepage.png', () => 'book-icon-homepage.pn
 
 describe('HomePage Component', () => {
   test('renders the SAPP title and book icon', () => {
-    render(<BrowserRouter>
+    render(<MemoryRouter>
               <HomePage />
-            </BrowserRouter>);
+            </MemoryRouter>);
 
     // Check if the title "SAPP" is present
     const titleElement = screen.getByText(/SAPP/i);
@@ -20,9 +20,9 @@ describe('HomePage Component', () => {
   });
 
   test('renders the Log In and Create Account buttons', () => {
-    render(<BrowserRouter>
+    render(<MemoryRouter>
             <HomePage />
-          </BrowserRouter>);    
+          </MemoryRouter>);    
     
     // Check if "Log In" button is present
     const loginButton = screen.getByText(/Log In/i);

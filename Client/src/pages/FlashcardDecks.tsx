@@ -1,59 +1,128 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { collection, addDoc, getDocs, query, where, doc, updateDoc, increment } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
+import { useAuth } from '../context/AuthContext';
 import './FlashcardDecks.css';
 
-const FlashcardDecks: React.FC = () => {
-  const [decks, setDecks] = useState([
-    { id: 1, name: 'Deck 1', cards: ['Card 1', 'Card 2', 'Card 3'] },
-    { id: 2, name: 'Deck 2', cards: ['Card 1', 'Card 2', 'Card 3'] },
-    { id: 3, name: 'Deck 3', cards: ['Card 1', 'Card 2', 'Card 3'] },
-  ]);
+type Card = {
+  id: string;
+  frontContent: string;
+  backContent: string;
+};
 
-  // Function to handle creating a new deck
-  const handleCreateNewDeck = () => {
-    const newDeckId = decks.length + 1; // Generate a new ID
-    const newDeck = {
-      id: newDeckId,
-      name: `Deck ${newDeckId}`,
-      cards: ['Card 1', 'Card 2', 'Card 3'], // Initialize with 3 cards
-    };
-    setDecks([...decks, newDeck]); // Update the state with the new deck
+type Deck = {
+  id: string;
+  name: string;
+  cards: Card[]; 
+};
+
+
+const FlashcardDecks: React.FC = () => {
+  const [decks, setDecks] = useState<Deck[] | null>(null);
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fetchDecks = async () => {
+    if (!currentUser) return;
+
+    try {
+      const q = query(
+        collection(db, 'decks'),
+        where('userId', '==', currentUser.uid) 
+      );
+      const querySnapshot = await getDocs(q);
+      const fetchedDecks: Deck[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Deck, 'id'>),
+      }));
+      setDecks(fetchedDecks);
+    } catch (error) {
+      console.error('Error fetching decks:', error);
+      setDecks([]); 
+    }
   };
 
+  useEffect(() => {
+    fetchDecks();
+  }, [currentUser, location]); 
+  const handleStudyDeck = (deckId: string) => {
+    const deckref = doc(db, "decks", deckId);
+    updateDoc(deckref, {
+      timesStudied: increment(1),
+    });
+    navigate(`/study/${deckId}`);
+  };
+
+  const handleCreateNewDeck = async () => {
+    if (!currentUser) {
+      console.error('No user logged in. Cannot create a deck.');
+      return;
+    }
+
+    const newDeck = {
+      name: `Deck ${decks?.length ? decks.length + 1 : 1}`,
+      cards: [],
+      userId: currentUser.uid,
+      timesStudied: 0
+    };
+
+    try {
+      const docRef = await addDoc(collection(db, 'decks'), newDeck);
+      const createdDeck = { id: docRef.id, ...newDeck };
+      setDecks((prevDecks) => (prevDecks ? [...prevDecks, createdDeck] : [createdDeck]));
+    } catch (error) {
+      console.error('Error creating new deck:', error);
+    }
+  };
+
+  const handleEditDeck = (deckId: string) => {
+    navigate(`/edit/${deckId}`);
+  };
+
+  if (!currentUser) {
+    return <p>Please log in to view your decks.</p>;
+  }
+
+  if (decks === null) {
+    return <p className="bg-white h-screen">Loading...</p>;
+  }
+
   return (
-    <div style={{ padding: '20px' }}>
-      <h1 className="your-decks-title">Your Decks</h1>
+
+    <div data-testid="Decks" className="bg-white h-[calc(100vh-88px)]">
+      <h1 className="your-decks-title pl-10">Your Decks</h1>
 
       <div className="deck-container">
-        {decks.map((deck) => (
-          <div key={deck.id} className="deck-card">
-            <div className="deck-preview">
-              <div className="card-stack">
-                {deck.cards.slice(0, 3).map((card, index) => (
-                  <div key={index} className={`card ${index === 2 ? 'front-card' : ''}`}>
-                    {card}
-                  </div>
-                ))}
+        {decks.length > 0 &&
+          decks.map((deck) => (
+            <div key={deck.id} className="deck-card">
+              <div className="deck-preview">
+                <div className="card-stack">
+                  {deck.cards.slice(0, 3).map((card, index) => (
+                    <div key={card.id} className={`card ${index === 2 ? 'front-card' : ''}`}>
+                      {card.frontContent}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="deck-name">{deck.name}</div>
+              <div className="button-container">
+                <button
+                  className="button edit-button"
+                  onClick={() => handleEditDeck(deck.id)}
+                >
+                  Edit
+                </button>
+                <button className="button study-button" onClick={()=>handleStudyDeck(deck.id)}>Study</button>
               </div>
             </div>
-            <div className="deck-name">{deck.name}</div>
-            <div className="button-container">
-              <Link to={`/edit/${deck.id}`} className="button edit-button">
-                Edit
-              </Link>
-              <Link to={`/study/${deck.id}`} className="button study-button">
-                Study
-              </Link>
-            </div>
-          </div>
-        ))}
+          ))}
 
         {/* Create New Deck Button */}
         <div className="create-new-placeholder">
-          <button
-            className="create-new-button"
-            onClick={handleCreateNewDeck} // Updated to call the new function
-          >
+          <button className="create-new-button" onClick={handleCreateNewDeck}>
             +
           </button>
           <div className="create-new-text">Create New</div>
