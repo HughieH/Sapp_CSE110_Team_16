@@ -19,7 +19,7 @@ const Login = () => {
    try {
      await signInWithEmailAndPassword(auth, email, password);
      console.log("User signed in successfully with email and password");
-     navigate('/decks'); // Redirect to decks page
+     navigate('/'); // Redirect to home page
 
    } catch (err) {
      if (err instanceof Error) {
@@ -48,9 +48,8 @@ const Login = () => {
  };
 
  return (
-   <div data-testid="Login" className="mr-20 grow flex flex-col justify-center h-[calc(100vh-88px)]">
-
-            <div className="right-panel">
+   <div data-testid="Login" className="grow flex flex-col justify-center h-screen">
+            <div className="right-panel pl-52">
                 <div className="login-content">
                     <div className="login-container">
                         <h1>Log in</h1>

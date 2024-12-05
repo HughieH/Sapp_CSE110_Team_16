@@ -55,9 +55,9 @@ const Timer: React.FC = () => {
     try {
       const userRef = doc(db, "users", currentUser.uid);
       const userDoc = await getDoc(userRef);
-
       if (userDoc.exists()) {
         const existingTotalTime = userDoc.data().totalStudyTime || 0;
+        console.log("SAVED: ", totalTime)
         await updateDoc(userRef, {
           totalStudyTime: existingTotalTime + totalTime, // Add session time to total
         });
@@ -66,7 +66,7 @@ const Timer: React.FC = () => {
           totalStudyTime: totalTime, // Create totalStudyTime if it doesn't exist
         });
       }
-      console.log("Study time saved to Firestore");
+      // console.log("Study time saved to Firestore");
     } catch (error) {
       console.error("Error saving study time to Firestore:", error);
     }
@@ -86,15 +86,6 @@ const Timer: React.FC = () => {
   const addLap = (): void => {
     setLaps((prevLaps) => [...prevLaps, time]); // Append current time to laps
   };
-
-  // Save time when the component unmounts
-  useEffect(() => {
-    return () => {
-      if (sessionTime > 0) {
-        saveTimeToFirestore(sessionTime);
-      }
-    };
-  }, [sessionTime]);
 
   return (
     <div className='h-[calc(100vh-88px)] flex flex-col'>
@@ -138,7 +129,9 @@ const Timer: React.FC = () => {
         {/* Timer controls */}
         <div className="flex space-x-4 mt-6">
           <button
-            onClick={() => setIsRunning(!isRunning)}
+            onClick={() => {
+              setIsRunning(!isRunning);
+            }}
             className={`w-32 px-4 py-2 rounded-lg text-white font-bold ${
               isRunning ? "bg-yellow-500" : "bg-green-500"
             } transform hover:scale-110 transition duration-300`}

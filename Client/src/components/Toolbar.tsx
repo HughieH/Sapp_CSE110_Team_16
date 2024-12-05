@@ -1,14 +1,17 @@
 import React from 'react';
 import CollapseIcon from '../assets/icons/navbar collapser.png'
+import LogoutIcon from '../assets/icons/logout.png'
 import CollapseIconGreen from '../assets/icons/navbar collapser green.png'
 
 import { useLocation } from 'react-router-dom';
 
 interface toolbarProps {
-    onButtonClick: () => void;
+    onCollapseClick: () => void;
+    onLogoutClick: () => void;
+    navbarOpen: boolean;
 }
 
-const Toolbar: React.FC<toolbarProps> = ({ onButtonClick }) => {
+const Toolbar: React.FC<toolbarProps> = ({ onCollapseClick, navbarOpen, onLogoutClick }) => {
   const location = useLocation();
   console.log(location.pathname)
 
@@ -31,8 +34,13 @@ const Toolbar: React.FC<toolbarProps> = ({ onButtonClick }) => {
   
   return (
     <>
-        <div data-testid="Toolbar" className={`sticky pl-1/6 fixed inline-block overflow-auto float-left w-screen sticky bg-${!schemeIsGreen ? "sapp-green" : "white"}`}>
-            <img data-testid="Collapser" className={`rounded-2xl w-10 my-6 mx-2 p-2 bg-${bgColorScheme}`} src={schemeIsGreen ? CollapseIcon : CollapseIconGreen} onClick={onButtonClick}/>
+        <div data-testid="Toolbar" className={`sticky pl-1/6 flex flex-box fixed inline-block overflow-auto float-left w-screen sticky bg-${!schemeIsGreen ? "sapp-green" : "white"}`}>
+          <div className="flex items-center">
+            <img data-testid="Collapser" className={`rounded-2xl w-10 my-6 mx-2 p-2 bg-${bgColorScheme}`} src={schemeIsGreen ? CollapseIcon : CollapseIconGreen} onClick={onCollapseClick}/>
+          </div>
+          <div className={`flex items-center ml-auto mr-${navbarOpen ? '20' : '0'}`}>
+            <img data-testid="Logout" className={`rounded-2xl w-10 my-6 mx-2 p-2 bg-${bgColorScheme}`} src={schemeIsGreen ? LogoutIcon : LogoutIcon} onClick={onLogoutClick}/>
+          </div>
         </div>
     </>
   );

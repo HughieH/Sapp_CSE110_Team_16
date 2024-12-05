@@ -26,7 +26,6 @@ body {
     align-items: flex-start;
     justify-content: flex-start;
     padding-top: 0px; 
-    padding-left: 110px; 
     position: relative; 
 }
 
@@ -70,7 +69,7 @@ body {
 }
 .additional-image {
     position: absolute; 
-    bottom: 160px; 
+    bottom: 120px; 
     left: calc(110px + 600px + 370px); 
     width: 450px; 
     height: auto;

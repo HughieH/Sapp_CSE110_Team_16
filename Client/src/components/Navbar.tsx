@@ -42,7 +42,7 @@ const Navbar = () => {
         <div className="flex flex-col justify-between h-full">
           <Link data-testid="HomeIcon" to="/">
             <img
-              className="mt-[10%]"
+              className=""
               src={schemeIsGreen ? SappLogo : SappLogoGreen}
             />
           </Link>

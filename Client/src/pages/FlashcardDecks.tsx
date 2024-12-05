@@ -86,12 +86,12 @@ const FlashcardDecks: React.FC = () => {
   }
 
   if (decks === null) {
-    return <p>Loading...</p>;
+    return <p className="bg-white h-screen">Loading...</p>;
   }
 
   return (
-    <div data-testid="Decks" style={{ padding: '20px' }}>
-      <h1 className="your-decks-title">Your Decks</h1>
+    <div data-testid="Decks" className="bg-white h-[calc(100vh-88px)]">
+      <h1 className="your-decks-title pl-10">Your Decks</h1>
 
       <div className="deck-container">
         {decks.length > 0 &&

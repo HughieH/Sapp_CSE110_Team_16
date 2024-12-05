@@ -65,8 +65,8 @@ const Register = () => {
   };
 
   return (
-    <div data-testid="Register" className="grow flex flex-col justify-center h-[calc(100vh-88px)] mr-20">
-      <div className="right-panel">
+    <div data-testid="Register" className="grow flex flex-col justify-center h-screen">
+      <div className="right-panel pl-52">
         <div className="login-content">
           <div className="login-container">
             <h1>Create Account</h1>
@@ -109,7 +109,7 @@ const Register = () => {
               </Link>
             </div>
           </div>
-          <img src={register} alt="Additional" className="additional-image" />
+          <img src={register} alt="Additional" className="additional-image pt-16" />
         </div>
       </div>
     </div>

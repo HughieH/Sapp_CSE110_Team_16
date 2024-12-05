@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen, fireEvent } from '@testing-library/react';
-import PageContainer from '../PageContainer';
+import PageContainer from './PageContainer';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('NavBar Component', () => {
