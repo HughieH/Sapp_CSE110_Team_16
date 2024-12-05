@@ -55,7 +55,7 @@ const Recommend: React.FC = () => {
       )}
       {selectedStrategy && !isDrawing && ( 
         <button onClick={handleResetAndDraw} className="reset-button">
-          Reinsert Coin
+          Insert Coin
         </button>
       )}
       <div className={`claw-machine ${isDrawing ? 'active' : ''}`}>
