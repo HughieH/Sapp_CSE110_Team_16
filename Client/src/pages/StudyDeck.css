@@ -481,3 +481,163 @@
   justify-content: center;
   padding: 20px;
 }
+
+/* Container for Statistics */
+.statistics-container {
+  text-align: center;
+  background-color: #e8f5e9;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.statistics-container h3 {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.statistics-container p {
+  font-size: 1rem;
+  color: #388e3c;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+/* Deck Title Consistency */
+.deck-title {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Completion Section Styling */
+.completion-container {
+  text-align: center;
+  background-color: #e8f5e9;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.completion-message {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #388e3c; /* Success green */
+  margin-bottom: 15px;
+}
+
+.success-rate {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #66bb6a;
+  margin-bottom: 20px;
+}
+
+/* Completion Action Buttons */
+.completion-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.completion-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.completion-button.restudy-button {
+  background-color: #ff7043; /* Orange */
+}
+
+.completion-button.restudy-button:hover {
+  background-color: #e64a19; /* Darker orange */
+}
+
+.completion-button.exit-button {
+  background-color: #388e3c; /* Green */
+}
+
+.completion-button.exit-button:hover {
+  background-color: #2e7d32; /* Darker green */
+}
+/* Spaced Repetition Button Styling */
+.spaced-repetition-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #42a5f5; /* Light blue */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+  margin: 10px 0;
+}
+
+.spaced-repetition-button:hover {
+  background-color: #1e88e5; /* Darker blue */
+  transform: scale(1.05); /* Subtle zoom on hover */
+}
+
+/* Completion Screen */
+.completion-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f1f8e9; /* Light green background */
+  color: #2e7d32; /* Success green text */
+  text-align: center;
+  padding: 20px;
+}
+
+.completion-screen h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.completion-screen p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.completion-screen button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #66bb6a; /* Success green */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.completion-screen button:hover {
+  background-color: #388e3c;
+}
+
+.completion-screen a {
+  font-size: 1rem;
+  color: #388e3c; /* Link green */
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.completion-screen a:hover {
+  text-decoration: underline;
+}
