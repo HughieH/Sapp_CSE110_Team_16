@@ -1,134 +1,143 @@
+.recommend-body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
 .recommend-container {
-    text-align: center;
-    margin-top: 50px;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .recommend-container h1 {
-    font-size: 48px; 
-    color: #fff; 
-    font-family: 'Georgia', serif; 
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
-    margin-bottom: 20px;
-  }
-  
-  .reveal-button {
-    padding: 15px;
-    font-size: 18px;
-    border-radius: 8px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .reveal-button:disabled {
-    background-color: #aaa;
-    cursor: not-allowed;
-  }
-  
-  .claw-machine {
-    margin: 40px auto;
-    width: 500px;
-    height: 600px;
-    position: relative;
-    border: 4px solid #ccc;
-    border-radius: 20px;
-    background: #f9f9f9;
-    overflow: hidden;
-  }
-  
-  .claw-machine.active .claw {
-    animation: claw-drop 3s ease-in-out;
-  }
-  
-  .claw {
-    width: 120px;
-    height: 120px;
-    background: #888;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    animation: claw-drop 3s ease-in-out;
-  }
-  
-  .prize-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center; 
-    width: 90%; 
-    height: 600px; 
-    margin: 0 auto; 
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    top: 160px;
-  }
-  
-  
-  .prize-placeholder {
-    font-size: 50px;
-    animation: bounce 1.5s infinite;
-  }
-  
-  .prize {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
-    text-align: center; 
-    width: 100%; 
-    height: 100%; 
-  }
-  
-  
-  .prize h2 {
-    font-size: 36px;
-    margin: 0;
-  }
-  
-  .prize .description {
-    font-size: 20px;
-    margin-top: 10px;
-    color:  black;
-  }
-  
-  @keyframes claw-drop {
-    0% {
+  text-align: center;
+  margin-top: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #fff;
+  padding: 20px;
+  min-height: 100vh;
+  box-shadow: none;
+}
+
+.recommend-container h1 {
+  font-size: 48px;
+  color: #333;
+  font-family: 'Georgia', serif;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+}
+
+.reveal-button {
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reveal-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.claw-machine {
+  margin: 40px auto;
+  width: 500px;
+  height: 600px;
+  position: relative;
+  border: 4px solid #ccc;
+  border-radius: 20px;
+  background: #f9f9f9;
+  overflow: hidden;
+}
+
+.claw-machine.active .claw {
+  animation: claw-drop 3s ease-in-out;
+}
+
+.claw {
+  width: 120px;
+  height: 120px;
+  background: #888;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  animation: claw-drop 3s ease-in-out;
+}
+
+.prize-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  height: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  top: 160px;
+}
+
+.prize-placeholder {
+  font-size: 50px;
+  animation: bounce 1.5s infinite;
+}
+
+.prize {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.prize h2 {
+  font-size: 36px;
+  margin: 0;
+}
+
+.prize .description {
+  font-size: 20px;
+  margin-top: 10px;
+  color: black;
+}
+
+.reset-button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+  background-color: #218838;
+}
+
+@keyframes claw-drop {
+  0% {
       top: -120px;
-    }
-    50% {
+  }
+  50% {
       top: 300px;
-    }
-    100% {
+  }
+  100% {
       top: 0;
-    }
   }
-  
-  @keyframes bounce {
-    0%, 100% {
+}
+
+@keyframes bounce {
+  0%, 100% {
       transform: translateY(0);
-    }
-    50% {
+  }
+  50% {
       transform: translateY(-20px);
-    }
   }
-  .reset-button {
-    margin-top: 20px;
-    padding: 15px 30px;
-    font-size: 18px;
-    border-radius: 10px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .reset-button:hover {
-    background-color: #28a745;
-  }
+}
