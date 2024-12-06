@@ -40,24 +40,24 @@ const Navbar = () => {
     <>
       <nav data-testid='Navbar' className={`sticky h-full p-4 rounded-xl bg-${bgColorScheme} text-${fgColorScheme}`}>
         <div className="flex flex-col justify-between h-full">
-          <Link data-testid="HomeIcon" to="/">
+          <Link data-testid="HomeIcon" to="/" className="hover:bg-sapp-lime rounded-3xl transition-colors duration-100 ease-in">
             <img
-              className=""
+              className="w-14"
               src={schemeIsGreen ? SappLogo : SappLogoGreen}
             />
           </Link>
 
           <div className="flex flex-col justify-center mt-4 flex-grow">
-            <Link data-testid="DecksIcon" to="/decks">
+            <Link data-testid="DecksIcon" to="/decks" className="hover:bg-sapp-lime rounded-3xl transition-colors duration-100 ease-in">
               <div className="py-8">
                 <img
                   className="w-4/5 ml-[10%]"
                   src={schemeIsGreen ? DecksIcon : DecksIconGreen}
                 />
-                <h1 className={`font-bold text-center text-${fgColorScheme}`}>Decks</h1>
+                <h1 className={`font-bold text-base text-center text-${fgColorScheme}`}>Decks</h1>
               </div>
             </Link>
-            <Link data-testid="TimerIcon" to="/timers">
+            <Link data-testid="TimerIcon" to="/timers" className="hover:bg-sapp-lime rounded-3xl transition-colors duration-100 ease-in">
               <div className="py-8">
                 <img
                   className="w-4/5 ml-[10%]"
@@ -66,7 +66,7 @@ const Navbar = () => {
                 <h1 className={`font-bold text-center text-${fgColorScheme}`}>Timers</h1>
               </div>
             </Link>
-            <Link data-testid="ProfileIcon" to="/profile">
+            <Link data-testid="ProfileIcon" to="/profile" className="hover:bg-sapp-lime rounded-3xl transition-colors duration-100 ease-in">
               <div className="py-8">
                 <img
                   className="w-4/5 ml-[10%]"

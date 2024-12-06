@@ -8,9 +8,7 @@ const Timer: React.FC = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [laps, setLaps] = useState<number[]>([]); // Array to store lap times
   const [sessionTime, setSessionTime] = useState<number>(0); // Time studied in this session
-  const [weeklyTime, setWeeklyTime] = useState<number>(
-    Number(localStorage.getItem("weeklyTime")) || 0
-  ); // Time studied this week
+  const [weeklyTime, setWeeklyTime] = useState<number>(0); // Time studied this week
   const { currentUser } = useAuth();
 
   // Convert time to MM:SS:ms format
@@ -43,6 +41,48 @@ const Timer: React.FC = () => {
     };
   }, [isRunning]);
 
+  // Save timer state to localStorage whenever it updates
+  useEffect(() => {
+    localStorage.setItem(
+      "timerState",
+      JSON.stringify({
+        time,
+        isRunning,
+        lastUpdated: isRunning ? Date.now() : null,
+      })
+    );
+    console.log("Saving time!")
+  }, [time, isRunning]);
+  
+  const fetchTotalTime = async () => {
+    if (!currentUser) return;
+
+    try {
+      const userRef = doc(db, "users", currentUser.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        console.log("Successfully retrieved user data.");
+        setWeeklyTime(userDoc.data().totalStudyTime);
+      }
+      else {
+        console.log("UserDoc not found.");
+      }
+    } catch (error) {
+      console.error("Error getting user data from Firestore:", error);
+    }  
+  };
+
+  // Restore timer state from localStorage on mount
+  useEffect(() => {
+    fetchTotalTime()
+  }, []);
+
+  // Update the browser tab title with the current timer value
+  useEffect(() => {
+    document.title = `Timer: ${formatTime(time)}`;
+  }, [time]);
+
   // Save weeklyTime to localStorage whenever it updates
   useEffect(() => {
     localStorage.setItem("weeklyTime", String(weeklyTime));
@@ -57,7 +97,6 @@ const Timer: React.FC = () => {
       const userDoc = await getDoc(userRef);
       if (userDoc.exists()) {
         const existingTotalTime = userDoc.data().totalStudyTime || 0;
-        console.log("SAVED: ", totalTime)
         await updateDoc(userRef, {
           totalStudyTime: existingTotalTime + totalTime, // Add session time to total
         });
@@ -66,7 +105,6 @@ const Timer: React.FC = () => {
           totalStudyTime: totalTime, // Create totalStudyTime if it doesn't exist
         });
       }
-      // console.log("Study time saved to Firestore");
     } catch (error) {
       console.error("Error saving study time to Firestore:", error);
     }
@@ -77,9 +115,8 @@ const Timer: React.FC = () => {
     setIsRunning(false);
     setTime(0);
     setLaps([]); // Clear lap times
-    setWeeklyTime((prevWeeklyTime) => prevWeeklyTime + sessionTime); // Add session time to weekly total
-    saveTimeToFirestore(sessionTime); // Save session time to Firestore
-    setSessionTime(0); // Reset session time
+    setWeeklyTime((prevWeeklyTime) => prevWeeklyTime + time); // Add session time to weekly total
+    saveTimeToFirestore(weeklyTime); // Save session time to Firestore
   };
 
   // Add a lap
@@ -96,7 +133,7 @@ const Timer: React.FC = () => {
             Total Time This Session: {formatTime(sessionTime)}
           </p>
           <p className="text-green-800 font-bold">
-            Total Time This Week: {formatTime(weeklyTime)}
+            Total Time Overall: {formatTime(weeklyTime)}
           </p>
         </div>
       </div>
@@ -156,7 +193,7 @@ const Timer: React.FC = () => {
 
         {/* Lap times */}
         <div className="mt-8 w-5/12">
-          <h3 className="text-xl font-bold mb-2 text-center">Lap Times</h3>
+          <h3 className="text-xl font-bold mb-2 text-center">Study Sessions</h3>
           <ul className="list-decimal list-inside bg-gray-100 p-4 rounded-lg">
             {laps.length > 0 ? (
               laps.map((lap, index) => (
@@ -165,7 +202,7 @@ const Timer: React.FC = () => {
                 </li>
               ))
             ) : (
-              <p className="text-center text-gray-500">No laps recorded</p>
+              <p className="text-center text-gray-500">No study sessions recorded</p>
             )}
           </ul>
         </div>

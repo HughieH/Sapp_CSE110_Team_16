@@ -2,13 +2,17 @@
 
 UCSD students often have trouble maximizing the effectiveness of their study sessions, mainly due to the susceptibility to distractions and procrastination. Our app, “Sapp” offers two main tools to the user: a catalog of study tips and techniques to learn, and a habit tracker to maintain what they learned. To aid students with the issue of distractions and inconsistent studying, we will be implementing a study timer-goal system for the user to stay on track with the goals they set at the beginning of a quarter. 
 
-![Project Screenshot](https://cdn.discordapp.com/attachments/1291885101835223088/1304241751552426067/image.png?ex=672ead49&is=672d5bc9&hm=93cd892e51a3c0941baaa70e02127a4f44d84c157feed1d77374a347e4d10fbb&)
+![Project Screenshot](/Client/src/assets/SAP-home-page.png)
+![Project Screenshot](/Client/src/assets/SAP-profile.png)
+![Project Screenshot](/Client/src/assets/SAP-timer.png)
+![Project Screenshot](/Client/src/assets/SAP-deck-home.png)
+![Project Screenshot](/Client/src/assets/SAP-decks.png)
 
 **CSE 110 Group Project Team 16 Fall 2024**
 Roles:
 * Frontend - Hou, Diego, Jiho
-* Full-stack - Jonathan
-* Backend - Jon, Jose
+* Full-stack - Joho
+* Backend - Jonathan, Jose
 
 ### Project Details
 * [Jira Board](https://jonatuanh.atlassian.net/jira/software/projects/TEAM16/boards/3/timeline?shared=&atlOrigin=eyJpIjoiMDE0NDlkOTdiOTEyNDlmYWEwNGQzZjlkZGJiNjUwY2YiLCJwIjoiaiJ9)

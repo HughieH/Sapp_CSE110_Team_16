@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from '../context/AuthContext'; 
 import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
 
 import App from '../App'
 import Toolbar from '../components/Toolbar'
@@ -10,6 +11,7 @@ import Navbar from '../components/Navbar'
 const PageContainer: React.FC = () => {
     const [message, setMessage] = useState(true);
     const { currentUser } = useAuth();
+    const navigate = useNavigate();
 
     console.log("USER: ", currentUser)
 
@@ -23,6 +25,7 @@ const PageContainer: React.FC = () => {
     const handleLogout = async () => {
         const auth = getAuth(); // Get the auth instance
         try {
+            navigate('/'); // Redirect to home page
             await signOut(auth); // Sign out the user
             console.log("User signed out successfully");
         } catch (error) {

@@ -587,7 +587,9 @@
 }
 
 .spaced-repetition-button:hover {
+  sprint5-decksFrontend
   background-color: #cc8899; /* Darker blue */
+
   transform: scale(1.05); /* Subtle zoom on hover */
 }
 
@@ -654,4 +656,4 @@
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   font-size: 14px; /* Improved font size for readability */
-}
+
