@@ -7,8 +7,8 @@ UCSD students often have trouble maximizing the effectiveness of their study ses
 **CSE 110 Group Project Team 16 Fall 2024**
 Roles:
 * Frontend - Hou, Diego, Jiho
-* Full-stack - Jonathan
-* Backend - Jon, Jose
+* Full-stack - Joho
+* Backend - Jonathan, Jose
 
 ### Project Details
 * [Jira Board](https://jonatuanh.atlassian.net/jira/software/projects/TEAM16/boards/3/timeline?shared=&atlOrigin=eyJpIjoiMDE0NDlkOTdiOTEyNDlmYWEwNGQzZjlkZGJiNjUwY2YiLCJwIjoiaiJ9)
