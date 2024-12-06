@@ -107,7 +107,7 @@ const Profile: React.FC = () => {
         <div className="flex flex-col items-center align-center justify-items gap-2">
           <img className="w-32 rounded-full bg-sapp-lime hover:border-8 hover:border-double hover:border-sapp-green hover:cursor-pointer md-8" src={ProfileIcon}/>
           <div className="text-white font-bold text-xl hover:bg-sapp-lime hover:cursor-pointer hover:rounded-lg" onClick={() => setIsModalOpen(true)}>
-            <h1>{currentUser ? currentUser.displayName : 'Log In'}</h1>
+            <h1>{currentUser ? currentUser.displayName || currentUser.email : 'Log In'}</h1>
           </div>
         </div>
       </div>
