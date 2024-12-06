@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
-
 import './StudyDeck.css';
 
 type Flashcard = {
@@ -29,6 +28,13 @@ const StudyDeck: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden'; // Disable scrolling
+    return () => {
+      document.body.style.overflow = ''; // Re-enable scrolling when component unmounts
+    };
+  }, []);
+
+  useEffect(() => {
     const fetchDeck = async () => {
       if (!deckId) return;
 
@@ -38,8 +44,9 @@ const StudyDeck: React.FC = () => {
 
         if (docSnapshot.exists()) {
           const data = docSnapshot.data() as Omit<Deck, 'id'>;
-          setDeck({ id: deckId, name: data.name, cards: data.cards || [] });
-          setStats((prev) => ({ ...prev, total: data.cards.length }));
+          const shuffledCards = shuffleDeck(data.cards); // Shuffle after fetch
+          setDeck({ id: deckId, name: data.name, cards: shuffledCards });
+          setStats((prev) => ({ ...prev, total: shuffledCards.length }));
         } else {
           console.error('Deck not found');
         }
@@ -51,6 +58,34 @@ const StudyDeck: React.FC = () => {
     fetchDeck();
   }, [deckId]);
 
+  // Function to shuffle the cards
+  const shuffleDeck = (cards: Flashcard[]) => {
+    const shuffledCards = [...cards];
+    for (let i = shuffledCards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledCards[i], shuffledCards[j]] = [shuffledCards[j], shuffledCards[i]];
+    }
+    return shuffledCards;
+  };
+
+  const shuffleCards = () => {
+    if (!deck) return;
+
+    const shuffledCards = shuffleDeck(deck.cards);
+    setDeck({ ...deck, cards: shuffledCards });
+    setCurrentCardIndex(0); // Reset to the first card
+    setStats({ correct: 0, incorrect: 0, total: deck.cards.length }); // Reset counters
+  };
+
+  const sortCards = () => {
+    if (!deck) return;
+
+    const sortedCards = [...deck.cards].sort((a, b) => a.numCorrect - b.numCorrect);
+    setDeck({ ...deck, cards: sortedCards });
+    setCurrentCardIndex(0); // Reset to the first card
+    setStats({ correct: 0, incorrect: 0, total: deck.cards.length }); // Reset counters
+  };
+
   const toggleFlip = () => setIsFlipped((prevState) => !prevState);
 
   const nextCard = () => {
@@ -59,13 +94,6 @@ const StudyDeck: React.FC = () => {
       setIsFlipped(false);
     } else {
       setIsCompleted(true);
-    }
-  };
-
-  const previousCard = () => {
-    if (currentCardIndex > 0) {
-      setCurrentCardIndex((prevIndex) => prevIndex - 1);
-      setIsFlipped(false);
     }
   };
 
@@ -99,11 +127,10 @@ const StudyDeck: React.FC = () => {
     }
   };
 
-  const sortCards = () => {
-    if (!deck) return;
-    const sortedCards = [...deck.cards].sort((a, b) => a.numCorrect - b.numCorrect);
-    setDeck({ ...deck, cards: sortedCards });
-    setCurrentCardIndex(0); // Restart from the first card
+  const resetStudy = () => {
+    setStats({ correct: 0, incorrect: 0, total: deck?.cards.length || 0 });
+    setCurrentCardIndex(0); // Reset to the first card
+    setIsCompleted(false); // Close the completion screen if it's open
   };
 
   if (isCompleted) {
@@ -112,7 +139,7 @@ const StudyDeck: React.FC = () => {
       <div className="completion-screen">
         <h1>You’ve finished studying the deck!</h1>
         <p>Success Rate: {successRate}%</p>
-        <button onClick={() => setIsCompleted(false)}>Restudy Deck</button>
+        <button onClick={resetStudy}>Restudy Deck</button>
         <Link to="/decks">Exit to Decks</Link>
       </div>
     );
@@ -137,7 +164,7 @@ const StudyDeck: React.FC = () => {
           </div>
         </div>
       </div>
-  
+
       <div className="button-group">
         <button className="study-button wrong-button" onClick={() => handleAnswer(false)}>
           Wrong
@@ -146,35 +173,28 @@ const StudyDeck: React.FC = () => {
           Correct
         </button>
       </div>
-  
-      <div className="navigation-buttons">
-        <button className="study-button previous-button" onClick={previousCard} disabled={currentCardIndex === 0}>
-          Previous
-        </button>
-        <button
-          className="study-button next-button"
-          onClick={nextCard}
-          disabled={currentCardIndex === deck.cards.length - 1}
-        >
-          Next
-        </button>
-      </div>
-  
-      <button className="spaced-repetition-button" onClick={sortCards}>
-        Sort by Spaced Repetition
-      </button>
-  
+
       <div className="statistics-container">
-        <p className="stat">Total: {stats.total}</p>
+        <p className="stat">
+          Card: {currentCardIndex + 1} of {deck.cards.length}
+        </p>
         <p className="stat">Correct: {stats.correct}</p>
         <p className="stat">Incorrect: {stats.incorrect}</p>
       </div>
-  
+
+      <button className="shuffle-button" onClick={shuffleCards}>
+        Shuffle Cards
+      </button>
+
+      <button className="spaced-repetition-button" onClick={sortCards}>
+        Sort by Spaced Repetition
+      </button>
+
       <Link to="/decks" className="go-back-link">
         Go Back
       </Link>
     </div>
   );
-}  
+};
 
 export default StudyDeck;
