@@ -36,10 +36,10 @@ const Toolbar: React.FC<toolbarProps> = ({ onCollapseClick, navbarOpen, onLogout
     <>
         <div data-testid="Toolbar" className={`sticky pl-1/6 flex flex-box fixed inline-block overflow-auto float-left w-screen sticky bg-${!schemeIsGreen ? "sapp-green" : "white"}`}>
           <div className="flex items-center">
-            <img data-testid="Collapser" className={`rounded-2xl w-10 my-6 mx-2 p-2 bg-${bgColorScheme}`} src={schemeIsGreen ? CollapseIcon : CollapseIconGreen} onClick={onCollapseClick}/>
+            <img data-testid="Collapser" className={`transition-colors duration-100 ease-in rounded-2xl w-10 my-6 mx-2 p-2 hover:cursor-pointer hover:bg-sapp-lime bg-${bgColorScheme}`} src={schemeIsGreen ? CollapseIcon : CollapseIconGreen} onClick={onCollapseClick}/>
           </div>
           <div className={`flex items-center ml-auto mr-${navbarOpen ? '20' : '0'}`}>
-            <img data-testid="Logout" className={`rounded-2xl w-10 my-6 mx-2 p-2 bg-${bgColorScheme}`} src={schemeIsGreen ? LogoutIcon : LogoutIcon} onClick={onLogoutClick}/>
+            <img data-testid="Logout" className={`transition-colors duration-100 ease-in rounded-2xl w-10 my-6 mx-2 p-2 hover:cursor-pointer hover:bg-sapp-lime bg-${bgColorScheme}`} src={schemeIsGreen ? LogoutIcon : LogoutIcon} onClick={onLogoutClick}/>
           </div>
         </div>
     </>
